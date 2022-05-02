@@ -17,3 +17,6 @@ Currently using data from the pokemon Api in order to display content and show b
 
 ## Future Task
 - [ ] Remove pokemon Api and allow users to post their own content
+
+## Preview
+<img src="https://github.com/EChilin5/Zotes_OCR/blob/master/Gif/Zotes_1.gif" width=250><br>
