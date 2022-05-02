@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B3CAE7E2"
+    tools:context=".PokemonDescription">
+
+    <ImageView
+        android:id="@+id/ivPokemonDesc"
+        android:layout_width="412dp"
+        android:layout_height="207dp"
+        android:background="#8ecae6"
+        android:contentDescription="@string/pokemon_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="240dp"
+        android:background="#F9FBFC"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintDimensionRatio="H,1:1"
+        >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/viewgroup_with_three_sections"
+            tools:layout_editor_absoluteX="-10dp"
+            tools:layout_editor_absoluteY="308dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            app:layout_constraintDimensionRatio="H,1:1"
+            />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pokemonInfo"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:outlineAmbientShadowColor="@color/black"
+            app:layout_constraintDimensionRatio="H,1:1"
+            />
+
+
+    </LinearLayout>
+
+    <android.widget.Button
+        android:id="@+id/btnBuyNow"
+        android:layout_width="133dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/checkoutbutton"
+        android:text="@string/buy_now"
+        android:textColor="#283593"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.widget.Button
+        android:id="@+id/btnPokeAddToCart"
+        android:layout_width="141dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/checkoutbutton"
+        android:text="@string/add_to_cart"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="409dp"
+        android:layout_height="57dp"
+        android:background="#00afb9"
+        android:outlineProvider="none"
+        android:elevation="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPokemonDesc">
+
+        <TextView
+            android:id="@+id/tvPokemonPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:text="@string/_100"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.48" />
+
+        <TextView
+            android:id="@+id/tvPokemonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Pickachu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
