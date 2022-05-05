@@ -30,14 +30,50 @@
         android:layout_height="wrap_content"
         android:elevation="8dp">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/PkDetailGuideLineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/PkDetailGuideLine1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/PkDetailGuideLineVEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="1.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/PkDetailGuideLine2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.76" />
+
         <ImageView
             android:id="@+id/ivPokemon"
-            android:layout_width="197dp"
-            android:layout_height="171dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/topround_box_background"
             android:elevation="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/PkDetailGuideLine2"
+            app:layout_constraintEnd_toStartOf="@+id/PkDetailGuideLineVEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/PkDetailGuideLineV1"
+            app:layout_constraintTop_toTopOf="@id/PkDetailGuideLine1"
+            app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,5 +108,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

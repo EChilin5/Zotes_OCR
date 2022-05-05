@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/ivPokemonDesc"
-        android:layout_width="match_parent"
-        android:layout_height="207dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#8ecae6"
         android:contentDescription="@string/pokemon_image"
         app:layout_constraintBottom_toTopOf="@+id/DescriptionGuideLine2"
