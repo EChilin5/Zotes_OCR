@@ -5,16 +5,19 @@
     android:id="@+id/ctShopping"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:paddingBottom="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="285dp"
+        android:layout_width="0dp"
         android:layout_height="144dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/box"
         android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ShoppingGuideLineV2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/ShoppingGuideLineV1"
@@ -22,14 +25,14 @@
 
         <ImageView
             android:id="@+id/ivOrderPokemon"
-            android:layout_width="128dp"
-            android:layout_height="123dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/pokebox"
             android:contentDescription="@string/pokesampleimage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ShoppingBoxGL2"
+            app:layout_constraintEnd_toStartOf="@+id/ShoppingBoxGLV2"
+            app:layout_constraintStart_toStartOf="@id/ShoppingBoxGLV1"
+            app:layout_constraintTop_toTopOf="@id/ShoppingBoxGL1"
             tools:ignore="ImageContrastCheck"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -38,24 +41,23 @@
             android:id="@+id/tvPokeNameCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:text="@string/bulbasaur"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.411"
-            app:layout_constraintStart_toEndOf="@+id/ivOrderPokemon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/ivCtDelete"
+            app:layout_constraintStart_toEndOf="@id/ShoppingBoxGLV2"
+            app:layout_constraintTop_toTopOf="@id/ShoppingBoxGL1" />
 
         <ImageView
             android:id="@+id/ivAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/checkoutbutton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvAmount"
+            app:layout_constraintBottom_toTopOf="@+id/ShoppingBoxGL2"
+            app:layout_constraintEnd_toStartOf="@+id/ShoppingBoxGLV3"
             app:srcCompat="@drawable/ic_plus" />
 
         <ImageView
@@ -63,47 +65,100 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/checkoutbutton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivOrderPokemon"
+            app:layout_constraintBottom_toBottomOf="@id/ShoppingBoxGL2"
+            app:layout_constraintStart_toEndOf="@id/ShoppingBoxGLV2"
             app:srcCompat="@drawable/ic_subtract" />
 
         <TextView
             android:id="@+id/tvAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="94dp"
+            android:layout_height="31dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_horizontal"
             android:text="0"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivRemove" />
+            app:layout_constraintBottom_toBottomOf="@id/ShoppingBoxGL2"
+            app:layout_constraintEnd_toStartOf="@+id/ivAdd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivRemove"
+            app:layout_constraintTop_toBottomOf="@+id/tvCost"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ShoppingBoxGL1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ShoppingBoxGL2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ShoppingBoxGLV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ShoppingBoxGLV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.48" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ShoppingBoxGLV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="1.0" />
+
+        <TextView
+            android:id="@+id/tvCost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="2dp"
+            android:text="@string/cost_500"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/ShoppingBoxGLV3"
+            app:layout_constraintStart_toEndOf="@+id/ivOrderPokemon"
+            app:layout_constraintTop_toBottomOf="@+id/tvPokeNameCart" />
+
+        <ImageView
+            android:id="@+id/ivCtDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="@id/ShoppingBoxGLV3"
+            app:layout_constraintTop_toTopOf="@id/ShoppingBoxGL1"
+            app:srcCompat="@drawable/ic_delete" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tvCost"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:text="@string/cost_500"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/ShoppingGuideLineVEnd"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@id/ShoppingGuideLineV2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.496" />
-
-    <ImageView
-        android:id="@+id/ivCtDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_delete" />
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0.5dp"-->
+    <!--        android:layout_margin="8dp"-->
+    <!--        android:background="#c0c0c0"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/ShoppingGuideLineV1"
@@ -127,7 +182,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ShoppingGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

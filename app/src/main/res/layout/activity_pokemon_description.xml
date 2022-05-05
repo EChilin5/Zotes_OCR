@@ -61,8 +61,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="373dp"
+        android:layout_marginTop="2dp"
         android:background="#F9FBFC"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/DescriptionGuideLine2.5"
         app:layout_constraintEnd_toStartOf="@+id/DescriptionGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
         app:layout_constraintTop_toBottomOf="@id/DescriptionGuideLine3">
@@ -71,6 +73,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:contentDescription="@string/viewgroup_with_three_sections"
             tools:layout_editor_absoluteX="-10dp"
             tools:layout_editor_absoluteY="308dp" />
@@ -101,7 +104,9 @@
         android:text="@string/buy_now"
         android:textColor="#283593"
         app:layout_constraintBottom_toBottomOf="@id/DescriptionGuideLineEnd"
-        app:layout_constraintEnd_toEndOf="@id/DescriptionGuideLineV2" />
+        app:layout_constraintEnd_toEndOf="@id/DescriptionGuideLineV2"
+        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5"
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.widget.Button
         android:id="@+id/btnPokeAddToCart"
@@ -113,7 +118,9 @@
         android:text="@string/add_to_cart"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/DescriptionGuideLineEnd"
-        app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1" />
+        app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
+        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/DecriptionGuideLineV1"
@@ -162,6 +169,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/DescriptionGuideLine2.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

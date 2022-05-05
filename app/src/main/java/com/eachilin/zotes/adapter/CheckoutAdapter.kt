@@ -1,5 +1,6 @@
 package com.eachilin.zotes.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -33,13 +34,14 @@ class CheckoutAdapter(private val poke:MutableList<CartModal>): RecyclerView.Ada
     }
 
     class CartViewHolder(itemView: ItemCheckoutBinding) : RecyclerView.ViewHolder(itemView.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(poke: CartModal) {
             var pokeImg :ImageView = itemView.findViewById(R.id.ivCheckPokemon)
             var name:TextView = itemView.findViewById(R.id.tvCheckPokeNameCart)
             var cost:TextView = itemView.findViewById(R.id.tvCheckCost)
 
             name.text = poke.name
-            cost.text = poke.pokeID?.toInt()?.times(15).toString()
+            cost.text = "$ ${ poke.pokeID?.toInt()?.times(15) }"
             var pokeID = poke.pokeID
             var pokemonLink =
                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$pokeID.png"

@@ -8,23 +8,24 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCheck"
-        android:layout_width="393dp"
-        android:layout_height="459dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:padding="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/btncBuyNow"
+        app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine6"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
         app:layout_constraintTop_toTopOf="@+id/CheckoutGuideLine5" />
 
     <Button
         android:id="@+id/btncBuyNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="224dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:text="@string/complete_order"
         app:layout_constraintBottom_toBottomOf="@id/CheckoutGuideLineEnd"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
-        app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1" />
+        app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
+        app:layout_constraintTop_toTopOf="@+id/CheckoutGuideLine6" />
 
     <TextView
         android:id="@+id/tvcCost"
@@ -34,8 +35,10 @@
         android:layout_marginEnd="92dp"
         android:text="@string/cost"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/ChekoutGuideLine2"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
-        app:layout_constraintTop_toTopOf="@id/CheckoutGuideLine1" />
+        app:layout_constraintTop_toTopOf="@id/CheckoutGuideLine1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -45,9 +48,12 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine3"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
-        app:layout_constraintTop_toBottomOf="@id/ChekoutGuideLine2" />
+        app:layout_constraintTop_toBottomOf="@id/ChekoutGuideLine2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvCheckout"
@@ -69,6 +75,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Email"
+        app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine4"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
@@ -78,10 +85,11 @@
         android:id="@+id/etAddress"
         android:layout_width="353dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Address"
+        app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine5"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
@@ -150,5 +158,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/CheckoutGuideLine6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

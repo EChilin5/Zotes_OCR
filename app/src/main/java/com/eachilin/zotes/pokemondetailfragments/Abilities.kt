@@ -71,7 +71,7 @@ class Abilities(var name: String, var id: String) : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
                         return
                     }
-                    binding.tvExperience.text= " Experience: " + body.baseExperience
+                    binding.tvExperience.text= "Experience: " + body.baseExperience
                     binding.tvHeight.text = "Height: " + body.height
                     binding.tvWeight.text = "Weight: " + body.weight
                 }
