@@ -6,9 +6,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.eachilin.zotes.modal.CartModal
 import java.lang.Exception
 
+
+private const val TAG = "CartHelper"
 class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
 
     companion object{
@@ -66,6 +69,21 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
        return success
 
+    }
+
+    fun checkPokemonExist(id: String) : Boolean {
+        val nameArray : ArrayList<String> = ArrayList()
+        val query = "Select $NAME from $TABLE_NAME Where $ID = $id"
+        val db = this.readableDatabase
+        val cursor:Cursor?
+        cursor = db.rawQuery(query, null)
+
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.close()
+        return true
     }
 
     @SuppressLint("Range")

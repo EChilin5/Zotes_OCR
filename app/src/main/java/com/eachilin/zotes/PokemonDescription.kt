@@ -27,6 +27,11 @@ class PokemonDescription : AppCompatActivity() {
 
     private lateinit var sqlCartHelper: CartHelper
 
+    override fun onStart() {
+        super.onStart()
+
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,9 +58,20 @@ class PokemonDescription : AppCompatActivity() {
                 .into(binding.ivPokemonDesc)
         }
 
+
+         var pokemonExistInCart =   sqlCartHelper.checkPokemonExist(id)
+
+
+
         val btnAddToCart = binding.btnPokeAddToCart
 
         val btnBuyNos = binding.btnBuyNow
+
+        if(pokemonExistInCart){
+            btnAddToCart.isEnabled = false
+        }
+
+        Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()
 
         val cost = "$ " + (id!!.toInt() * 15).toString();
         btnAddToCart.setOnClickListener { addPokemon(id, name, image) }
