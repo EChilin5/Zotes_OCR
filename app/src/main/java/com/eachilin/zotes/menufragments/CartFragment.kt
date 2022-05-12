@@ -41,13 +41,17 @@ class CartFragment : Fragment(), PokeId {
         countTotalVal()
     }
 
-    fun onIncrementPrice(increasePrice: Int){
+    fun onIncrementPrice(postId: String, increasePrice: Int, countUpdate :Int){
         count += increasePrice
+        sqlCartHelper.updatePokeCount(postId, countUpdate)
+        pokemonInfo[postId.toInt()-1].count = countUpdate
         tvFinalPrice.text = count.toString()
     }
 
-    fun onDecrementPrice(increasePrice: Int){
+    fun onDecrementPrice(postId: String, increasePrice: Int, countUpdate :Int){
         count -= increasePrice
+        sqlCartHelper.updatePokeCount(postId, count)
+        pokemonInfo[postId.toInt()-1].count = countUpdate
         tvFinalPrice.text = count.toString()
     }
 
@@ -118,6 +122,7 @@ class CartFragment : Fragment(), PokeId {
             count = 0
             for(item in pokemonInfo){
                 var price = item.pokeID?.toInt()?.times(15)
+                price = price!!.times(item.count)
                 if (price != null) {
                     count += price
                 }

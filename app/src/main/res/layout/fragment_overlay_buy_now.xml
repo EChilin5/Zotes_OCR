@@ -1,97 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:padding="8dp"
+    android:background="@drawable/buynowbackground"
+    android:padding="2dp"
     tools:context=".overlay_buy_now">
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:background="#86BED8"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL3"
+        app:layout_constraintEnd_toStartOf="@+id/OverlayBuyGLv2"
+        app:layout_constraintStart_toStartOf="@id/OverlayBuyGLv1"
+        app:layout_constraintTop_toTopOf="@id/OverlayBuyGL1"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvdfPokeName"
-        android:layout_width="229dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="11dp"
-        android:layout_toEndOf="@+id/imageView3"
-        android:text="TextView"
-        android:textSize="34sp" />
+        android:gravity="center_horizontal"
+        android:text="Poke Name"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/OverlayBuyGLv2"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL1" />
+
 
     <TextView
         android:id="@+id/tvdfCost"
-        android:layout_width="236dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvdfPokeName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="11dp"
-        android:layout_toEndOf="@+id/imageView3"
-        android:text="TextView"
-        android:textSize="24sp" />
+        android:gravity="center_horizontal"
+        android:text="@string/cost_500"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL3"
+        app:layout_constraintEnd_toEndOf="@id/OverlayBuyGLvEnd"
+        app:layout_constraintStart_toStartOf="@+id/OverlayBuyGLv2"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL2" />
 
-    <EditText
-        android:id="@+id/etdfName"
-        android:layout_width="379dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etdfNameLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
+        android:layout_margin="5dp"
         android:hint="Name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp" />
+        app:boxStrokeColor="@color/teal_200"
+        app:hintTextColor="@color/teal_200"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL4"
+        app:layout_constraintEnd_toEndOf="@id/OverlayBuyGLvEnd"
+        app:layout_constraintStart_toStartOf="@id/OverlayBuyGLv1"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL3">
 
-    <EditText
-        android:id="@+id/etdfEmail"
-        android:layout_width="374dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etdfName"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        android:minHeight="48dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etdfName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/etdfAddress"
-        android:layout_width="378dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etdfEmailLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etdfEmail"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="11dp"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        tools:text="Address" />
+        android:layout_margin="5dp"
+        android:hint="@string/email"
+        app:boxStrokeColor="@color/teal_200"
+        app:hintTextColor="@color/teal_200"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL5"
+        app:layout_constraintEnd_toEndOf="@id/OverlayBuyGLvEnd"
+        app:layout_constraintStart_toStartOf="@id/OverlayBuyGLv1"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etdfEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etdfAddressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/address"
+        app:boxStrokeColor="@color/teal_200"
+        app:hintTextColor="@color/teal_200"
+        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL6"
+        app:layout_constraintEnd_toEndOf="@id/OverlayBuyGLvEnd"
+        app:layout_constraintStart_toStartOf="@id/OverlayBuyGLv1"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL5">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etdfAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btndfBuy"
+        android:layout_width="210dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:text="Buy Now"
+        app:layout_constraintEnd_toStartOf="@+id/OverlayBuyGLvEnd"
+        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGLv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etdfAddress"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="Button" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
 
-</RelativeLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGLv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.4" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGLvEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="1.0" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="97dp"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.49" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/OverlayBuyGL6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

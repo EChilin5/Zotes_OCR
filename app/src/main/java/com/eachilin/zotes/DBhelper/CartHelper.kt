@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import android.widget.Toast
 import com.eachilin.zotes.modal.CartModal
 import java.lang.Exception
 
@@ -23,6 +24,7 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         private val ID ="id"
         private val NAME = "name"
         private val POKEID = "pokeID"
+        private val COUNT = "count"
         private val ORDERPLACE = "orderPlace"
         private val PURCHASE ="purchaseDate"
     }
@@ -30,7 +32,7 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE_QUERY : String = ("CREATE TABLE " + TABLE_NAME +
                 "(" + ID + " INTEGER PRIMARY KEY,  " + NAME + " TEXT, "  +
-                POKEID + " TEXT,  " + ORDERPLACE + " TEXT, " + PURCHASE + " TEXT "+")" )
+                POKEID + " TEXT,  "  + COUNT + " TEXT, " + ORDERPLACE + " TEXT, " + PURCHASE + " TEXT "+")" )
         db?.execSQL(CREATE_TABLE_QUERY)
     }
 
@@ -62,6 +64,7 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         contentValues.put(ID, std.id)
         contentValues.put(NAME, std.name)
         contentValues.put(POKEID, std.pokeID)
+        contentValues.put(COUNT, std.count)
         contentValues.put(ORDERPLACE, std.orderPlace)
         contentValues.put(PURCHASE, std.purchaseDate)
 
@@ -86,6 +89,36 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         return true
     }
 
+    fun deletePokemonExist() {
+        val query = "Delete from $TABLE_NAME"
+        val db = this.readableDatabase
+        val cursor:Cursor?
+        cursor = db.rawQuery(query, null)
+
+        if(cursor.count <= 0){
+            cursor.close()
+        }
+        cursor.close()
+    }
+
+    fun updatePokeCount(postId: String, updateCount:Int ) {
+
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COUNT, updateCount)
+
+        //        val success = db.delete(TABLE_NAME, "id=$id", null)
+
+//        val success = "Update $TABLE_NAME Set count = $updateCount where $ID = $postId"
+        val success = db.update(TABLE_NAME, contentValues,"$ID = $postId", arrayOf())
+
+        Log.e(TAG, "${success}")
+
+        db.close()
+    }
+
+
+
     @SuppressLint("Range")
     fun getAllPokemon(): ArrayList<CartModal>{
         val pkList:ArrayList<CartModal> = ArrayList()
@@ -105,6 +138,7 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         var id: Int
         var name:String
         var pokeId:String
+        var count: Int
         var order:String
         var purchaseDate :String
 
@@ -114,10 +148,11 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
                     id = cursor.getInt(cursor.getColumnIndex("id"))
                     name = cursor.getString(cursor.getColumnIndex("name"))
                     pokeId = cursor.getString(cursor.getColumnIndex("pokeID"))
+                    count = cursor.getInt(cursor.getColumnIndex("count"))
                     order = cursor.getString(cursor.getColumnIndex("orderPlace"))
                     purchaseDate = cursor.getString(cursor.getColumnIndex("purchaseDate"))
 
-                    val pk = CartModal(id=id, name=name, orderPlace = order, pokeID = pokeId, purchaseDate = purchaseDate)
+                    val pk = CartModal(id=id, name=name, orderPlace = order, pokeID = pokeId, count= count, purchaseDate = purchaseDate)
                     pkList.add(pk)
                 }while(cursor.moveToNext())
             }

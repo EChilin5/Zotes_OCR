@@ -1,14 +1,17 @@
 package com.eachilin.zotes
 
 import android.content.Intent
+import android.net.Uri
 import android.net.Uri.fromParts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.adapter.CheckoutAdapter
 import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.ActivityCheckoutBinding
@@ -31,6 +34,7 @@ class Checkout : AppCompatActivity() {
     private lateinit var etAddress: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnBuy: Button
+    private lateinit var sqlCartHelper: CartHelper
 
     private var pokemon = ArrayList<CartModal>()
 
@@ -43,6 +47,7 @@ class Checkout : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sqlCartHelper = this?.let { CartHelper(it) }!!
 
 
         rvCheckout = binding.rvCheck
@@ -56,6 +61,7 @@ class Checkout : AppCompatActivity() {
         btnBuy = binding.btncBuyNow
 
         btnBuy.setOnClickListener { checkout() }
+        countTotalVal()
 
     }
 
@@ -69,10 +75,49 @@ class Checkout : AppCompatActivity() {
 
     }
 
+    private fun countTotalVal(){
+        var count =0
+        if(pokemon.isEmpty()){
+            count =0
+        }else{
+            count = 0
+            for(item in pokemon){
+                var price = item.pokeID?.toInt()?.times(15)
+                price = price!!.times(item.count)
+                if (price != null) {
+                    count += price
+                }
+            }
+        }
+        binding.tvcCost.text = "$ $count"
+    }
+
     private fun checkout() {
-        val name = etName.text
-        val address = etAddress.text
-        val emailT = etEmail.text
+        val name = etName.text.trim().toString()
+        val address = etAddress.text.trim().toString()
+        val email = etEmail.text.trim().toString()
+
+        if(name.isNotEmpty() && address.isNotEmpty() && email.isNotEmpty()){
+            Toast.makeText(this, "t", Toast.LENGTH_SHORT).show()
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:") // only email apps should handle this
+
+         
+            intent.putExtra(Intent.EXTRA_EMAIL, email)
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Zotes Poke Order")
+            intent.putExtra(Intent.EXTRA_TEXT, "Here is your oder Number. Thank you for shopping");
+            sqlCartHelper.deletePokemonExist()
+            pokemon.clear()
+            adapter.notifyDataSetChanged()
+            startActivity(intent)
+            if (intent.resolveActivity(packageManager) != null) {
+
+
+            }else{
+                Toast.makeText(this, "null", Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
 //        val emailIntent = Intent(
 //            Intent.ACTION_SENDTO,

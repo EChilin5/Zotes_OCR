@@ -140,7 +140,7 @@ class PokemonDescription : AppCompatActivity() {
         val pokeListSize = sqlCartHelper.getAllPokemon()
         val primaryID = pokeListSize.size +1
 
-        val pokeList = CartModal(id=primaryID, name = name, pokeID = id, orderPlace= "false", purchaseDate = formatted )
+        val pokeList = CartModal(id=primaryID, name = name, pokeID = id, count = 1, orderPlace= "false", purchaseDate = formatted )
         val status = sqlCartHelper.insertStudent(pokeList)
         if(status > -1){
             Toast.makeText(this, "Pokemon Added...", Toast.LENGTH_SHORT).show()

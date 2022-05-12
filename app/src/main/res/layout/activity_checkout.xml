@@ -27,33 +27,40 @@
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
         app:layout_constraintTop_toTopOf="@+id/CheckoutGuideLine6" />
 
+
     <TextView
         android:id="@+id/tvcCost"
-        android:layout_width="65dp"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/cost"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/ChekoutGuideLine2"
-        app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
-        app:layout_constraintTop_toTopOf="@id/CheckoutGuideLine1"
+        app:layout_constraintEnd_toStartOf="@+id/CheckoutGuideLineV2"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="355dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextTextPersonNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+
+        android:hint="@string/name"
+        app:boxStrokeColor="@color/teal_200"
+        app:hintTextColor="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine3"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
-        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
-        app:layout_constraintTop_toBottomOf="@id/ChekoutGuideLine2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/ChekoutGuideLine2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvCheckout"
@@ -67,33 +74,47 @@
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
         app:layout_constraintTop_toTopOf="@id/CheckoutGuideLine1" />
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="354dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Email"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etEmailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/email"
+        app:boxStrokeColor="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine4"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
-        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
-        app:layout_constraintTop_toBottomOf="@id/CheckoutGuideLine3" />
+        app:layout_constraintTop_toBottomOf="@id/CheckoutGuideLine3">
 
-    <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="353dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Address"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etAddressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/address"
+        app:boxStrokeColor="@color/teal_200"
+        app:hintTextColor="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/CheckoutGuideLine5"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
-        app:layout_constraintTop_toBottomOf="@id/CheckoutGuideLine4" />
+        app:layout_constraintTop_toBottomOf="@id/CheckoutGuideLine4">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/CheckoutGuideLine1"

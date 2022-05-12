@@ -16,17 +16,14 @@ private const val TAG = "PokeCartAdapter"
 class PokeCartAdapter(
     private var poke: ArrayList<CartModal>,
     var onItemClicked: (CartModal) -> Unit,
-    var onIncrementPrice : (Int) -> Unit,
-    var onDecrementPrice: (Int) -> Unit
+    var onIncrementPrice : (String, Int, Int) -> Unit,
+    var onDecrementPrice: (String, Int, Int) -> Unit
 ): RecyclerView.Adapter<PokeCartAdapter.CartViewHolder>() {
 
     private var _binding: PokeShoppingBinding?=null
     private val binding get() = _binding!!
 
     private lateinit  var sqlCartHelper: CartFragment
-
-
-
 
     private var onClickItem: ((CartModal)-> Unit)? = null
     private var onClickDeleteItem: ((CartModal) -> Unit)? = null
@@ -41,7 +38,7 @@ class PokeCartAdapter(
 
     class CartViewHolder(itemView: PokeShoppingBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(poke: CartModal, onIncrementPrice: (Int) -> Unit, onDecrementPrice: (Int) -> Unit) {
+        fun bind(poke: CartModal, onIncrementPrice: (String,Int, Int) -> Unit, onDecrementPrice: (String,Int, Int) -> Unit) {
 
             var tvPokemonName : TextView = itemView.findViewById(R.id.tvPokeNameCart)
             var tvCost : TextView = itemView.findViewById(R.id.tvCost)
@@ -50,7 +47,7 @@ class PokeCartAdapter(
             var tvAmount:TextView = itemView.findViewById(R.id.tvAmount)
             var tvAdd:ImageView = itemView.findViewById(R.id.ivAdd)
 
-            tvAmount.text = 1.toString()
+            tvAmount.text = poke.count.toString()
             var amount: Int = (tvAmount.text as String).toInt()
 
             var pokeID = poke.pokeID
@@ -68,7 +65,7 @@ class PokeCartAdapter(
                 tvAmount.text = amount.toString()
 
                 var price = pokeID?.toInt()?.times(15)
-                price?.let { it1 -> onDecrementPrice(it1) }
+                onDecrementPrice(poke.id.toString(), price!!.toInt(), amount )
                 price = price?.let { amount.toInt().times(it) }
                 tvCost.text = "$ $price"
 
@@ -77,7 +74,7 @@ class PokeCartAdapter(
             tvAdd.setOnClickListener { amount++
                 tvAmount.text = amount.toString()
                 var price = pokeID?.toInt()?.times(15)
-                price?.let { it1 -> onIncrementPrice(it1) }
+                onIncrementPrice(poke.id.toString(), price!!.toInt(), amount)
                 price = price?.let { amount.toInt().times(it) }
                 tvCost.text = "$ $price"
             }
