@@ -56,6 +56,16 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
+        btnSignUp.setOnClickListener {
+            goSignUpActivity()
+        }
+    }
+
+    private fun goSignUpActivity() {
+        val intent = Intent(this, SetUpProfile::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun goHomeActivity() {

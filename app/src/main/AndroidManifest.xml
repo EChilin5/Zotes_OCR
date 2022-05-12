@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zotes">
         <activity
+            android:name=".SetUpProfile"
+            android:exported="true"
+            android:label="@string/title_activity_set_up_profile"
+            android:theme="@style/Theme.Zotes.NoActionBar" />
+        <activity
             android:name=".signup"
             android:exported="true" />
         <activity
@@ -23,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Checkout"
             android:exported="true"
@@ -34,9 +38,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>
