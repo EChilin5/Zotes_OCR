@@ -60,6 +60,9 @@ class LoginActivity : AppCompatActivity() {
         btnSignUp.setOnClickListener {
             goSignUpActivity()
         }
+        binding.tvHelp.setOnClickListener {
+            openFragment()
+        }
     }
 
     private fun goSignUpActivity() {
@@ -73,6 +76,13 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
 
+    }
+
+    private fun openFragment() {
+
+        val dialog = ForgotPasswordOverlay()
+        val fm = this.supportFragmentManager
+        dialog.show(fm, "name")
     }
 
     private fun initView() {

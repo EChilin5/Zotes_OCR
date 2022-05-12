@@ -12,6 +12,7 @@
     <color name="extra_light_grey">#E8EBEC</color>
     <color name="grey_shade">#e5e5e5</color>
     <color name="red_shade">#ff4d6d</color>
+    <color name="underline">#D8D6D6</color>
 
 
 </resources>
