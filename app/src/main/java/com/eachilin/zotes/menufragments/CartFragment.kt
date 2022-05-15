@@ -128,7 +128,7 @@ class CartFragment : Fragment(), PokeId {
                 }
             }
         }
-        tvFinalPrice.text = count.toString()
+        tvFinalPrice.text = "$ $count"
     }
 
 

@@ -13,6 +13,7 @@
     <color name="grey_shade">#e5e5e5</color>
     <color name="red_shade">#ff4d6d</color>
     <color name="underline">#D8D6D6</color>
-
+    <color name="nav_bar_color">#91ddd7</color>
+    <color name="item_background">#cdd4d2</color>
 
 </resources>

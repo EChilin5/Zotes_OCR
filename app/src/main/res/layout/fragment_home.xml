@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFC"
+    android:background="@color/nav_bar_color"
     tools:context=".menufragments.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestaurants"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FAFAFC"
-        android:padding="8dp"
+        android:background="@color/item_background"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         app:layout_constraintBottom_toBottomOf="@id/HomeGuideLine3"
         app:layout_constraintEnd_toEndOf="@id/HomeGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/HomeGuideLineV1"
@@ -22,26 +23,36 @@
         android:id="@+id/tvPokeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
         android:gravity="center|center_horizontal"
         android:text="@string/pokemon_eshop"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine1_5"
+        app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
+        app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
+        app:layout_constraintTop_toTopOf="@+id/HomeGuideLine1" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etSearchDetailLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_margin="10dp"
+        android:hint="Search"
         app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine2"
         app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@id/HomeGuideLineV1"
-        app:layout_constraintTop_toTopOf="@id/HomeGuideLine1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
+        app:layout_constraintTop_toTopOf="@+id/HomeGuideLine1_5"
+        app:startIconDrawable="@drawable/ic_baseline_search_24">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGuideLine1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.0" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearchDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:longClickable="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGuideLineV1"
@@ -52,12 +63,28 @@
         app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/HomeGuideLineV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/HomeGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGuideLine2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.07" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGuideLine3"
@@ -68,11 +95,11 @@
         app:layout_constraintGuide_percent="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGuideLineV2"
+        android:id="@+id/HomeGuideLine1_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="1.0" />
+        app:layout_constraintGuide_percent="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

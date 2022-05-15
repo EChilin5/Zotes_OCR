@@ -60,8 +60,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="373dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:background="#F9FBFC"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/DescriptionGuideLine2.5"
@@ -87,7 +87,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pokemonInfo"
             android:layout_width="match_parent"
-            android:layout_height="323dp"
+            android:layout_height="match_parent"
             android:outlineAmbientShadowColor="@color/black"
             app:layout_constraintDimensionRatio="H,1:1" />
 
@@ -177,6 +177,17 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.9" />
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="45dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
+        app:layout_constraintTop_toTopOf="@id/DescriptionGuideLine1"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

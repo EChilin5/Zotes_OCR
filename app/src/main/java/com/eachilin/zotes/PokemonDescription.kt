@@ -1,6 +1,7 @@
 package com.eachilin.zotes
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -69,6 +70,13 @@ class PokemonDescription : AppCompatActivity() {
 
         if(pokemonExistInCart){
             btnAddToCart.isEnabled = false
+        }
+
+        binding.btnBack.setOnClickListener {
+
+            var intent =Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()

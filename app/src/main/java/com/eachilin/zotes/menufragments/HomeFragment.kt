@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.SearchView
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -71,6 +72,26 @@ class HomeFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        binding.etSearchDetails.doAfterTextChanged { task ->
+            var text= task
+
+            val temp = mutableListOf<PokemonInitialData>()
+            if(text?.isNotEmpty() == true){
+                for (poke in restaurant){
+                    if(poke.name.contains(text)){
+                        temp.add(poke)
+                    }
+                }
+            }
+            if (text != null) {
+                if(text.isEmpty()){
+                    rvRestaurant.adapter = RestaurantsAdapter( restaurant)
+                }else{
+                    rvRestaurant.adapter = RestaurantsAdapter( temp)
+
+                }
+            }
+        }
 
     }
 
