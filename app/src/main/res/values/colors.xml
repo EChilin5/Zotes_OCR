@@ -15,5 +15,7 @@
     <color name="underline">#D8D6D6</color>
     <color name="nav_bar_color">#91ddd7</color>
     <color name="item_background">#cdd4d2</color>
+    <color name="default_background">#68d8d6</color>
+    <color name="nav_bg_2">#f7f7ff</color>
 
 </resources>

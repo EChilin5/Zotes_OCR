@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.databinding.ActivityMainBinding
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.menufragments.CartFragment
@@ -34,21 +36,64 @@ class MainActivity : AppCompatActivity() {
     private val cartFragment = CartFragment()
     private val settingFragment = SettingFragment()
 
+    private lateinit var sqlCartHelper: CartHelper
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sqlCartHelper = CartHelper(this)
 
-        binding.bottomNav.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.ic_home ->openFragment(homeFragment)
-                R.id.ic_cart ->openFragment(cartFragment)
-                R.id.ic_setting ->openFragment(settingFragment)
+//        binding.bottomNav.setOnItemSelectedListener {
+//            when(it.itemId){
+//                R.id.ic_home -> {
+//                    true
+//                    openFragment(homeFragment)
+//
+//                }
+//                R.id.ic_cart -> {
+//                    true
+//                    openFragment(cartFragment)
+//                }
+//                R.id.ic_setting -> {
+//                    true
+//                    openFragment(settingFragment)
+//                }
+//            }
+//            false
+//
+//        }
 
+        var status: Boolean = false
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.ic_home -> {
+
+                    openFragment(homeFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ic_cart -> {
+
+                    openFragment(cartFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ic_setting -> {
+
+                    openFragment(settingFragment)
+                    return@setOnItemSelectedListener true
+                }
+
+                else -> false
             }
-            true
+
         }
+
+        var cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
+        cartBadge?.isVisible = true
+        cartBadge?.number = sqlCartHelper.count();
+
         openFragment(homeFragment)
 
 

@@ -10,6 +10,10 @@ import android.util.Log
 import android.widget.Toast
 import com.eachilin.zotes.modal.CartModal
 import java.lang.Exception
+import android.database.DatabaseUtils
+
+
+
 
 
 private const val TAG = "CartHelper"
@@ -115,6 +119,13 @@ class CartHelper(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null
         Log.e(TAG, "${success}")
 
         db.close()
+    }
+
+    fun count(): Int{
+        val db = this.readableDatabase
+        val count = DatabaseUtils.queryNumEntries(db, TABLE_NAME)
+        db.close()
+        return count.toInt()
     }
 
 

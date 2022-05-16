@@ -4,28 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nav_bar_color"
+    android:background="@color/item_background"
     android:fitsSystemWindows="true"
     tools:context=".menufragments.CartFragment">
-
-    <TextView
-        android:id="@+id/tvCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/shoping_cart"
-        android:textColor="@color/black"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/CartGuideLine2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/CartGuideLine1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvShoppingCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="2dp"
         android:background="@color/item_background"
         android:padding="4dp"
         app:layout_constraintBottom_toTopOf="@+id/CartGuideLine3"
@@ -39,7 +26,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#68d8d6"
+        android:background="@color/default_background"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="@id/CartGuideLine4"
         app:layout_constraintEnd_toEndOf="@id/CartGuideLineV2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -53,7 +41,7 @@
             android:layout_marginStart="44dp"
             android:text="Total :"
 
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
             android:text="@string/cost_500"
-            android:textColor="#000000"
+            android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvTotal"
@@ -99,7 +87,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.06" />
+        app:layout_constraintGuide_percent="0.07" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/CartGuideLine3"
@@ -132,5 +120,32 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/default_background"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toTopOf="@id/CartGuideLine2"
+        app:layout_constraintEnd_toStartOf="@+id/CartGuideLineV2"
+        app:layout_constraintStart_toStartOf="@id/CartGuideLineV1"
+        app:layout_constraintTop_toTopOf="@id/CartGuideLine1">
+
+        <TextView
+            android:id="@+id/tvCartTitle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/shoping_cart"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

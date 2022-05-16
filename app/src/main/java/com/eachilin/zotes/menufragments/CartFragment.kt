@@ -18,6 +18,7 @@ import com.eachilin.zotes.R
 import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.FragmentCartBinding
 import com.eachilin.zotes.modal.CartModal
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 private const val TAG = "CartFragment"
@@ -46,6 +47,7 @@ class CartFragment : Fragment(), PokeId {
         sqlCartHelper.updatePokeCount(postId, countUpdate)
         pokemonInfo[postId.toInt()-1].count = countUpdate
         tvFinalPrice.text = count.toString()
+        updateBadge(true)
     }
 
     fun onDecrementPrice(postId: String, increasePrice: Int, countUpdate :Int){
@@ -53,6 +55,21 @@ class CartFragment : Fragment(), PokeId {
         sqlCartHelper.updatePokeCount(postId, count)
         pokemonInfo[postId.toInt()-1].count = countUpdate
         tvFinalPrice.text = count.toString()
+        updateBadge(false)
+    }
+
+    fun updateBadge(increase :Boolean){
+        var nav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+
+        var cartBadge = nav?.getOrCreateBadge(R.id.ic_cart)
+        if(increase){
+            cartBadge?.number = cartBadge?.number?.plus(1)!!;
+        }else{
+
+            cartBadge?.number = cartBadge?.number?.minus(1)!!;
+        }
+        cartBadge?.isVisible = true
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

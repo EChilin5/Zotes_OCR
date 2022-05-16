@@ -14,6 +14,7 @@ import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.adapter.ViewPagerAdapter
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.modal.CartModal
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.lang.Exception
 import java.time.LocalDateTime
@@ -156,6 +157,8 @@ class PokemonDescription : AppCompatActivity() {
                 Toast.makeText(this, "Pokemon Not Added...", Toast.LENGTH_SHORT).show()
 
         }
+
+
 
 
     }

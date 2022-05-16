@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nav_bar_color"
+    android:background="@color/default_background"
     tools:context=".menufragments.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,10 +23,10 @@
         android:id="@+id/tvPokeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center|center_horizontal"
+        android:layout_margin="10dp"
         android:text="@string/pokemon_eshop"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine1_5"
         app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
         app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
@@ -39,6 +39,7 @@
 
         android:layout_margin="10dp"
         android:hint="Search"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine2"
         app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
         app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
@@ -48,7 +49,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearchDetails"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:longClickable="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
