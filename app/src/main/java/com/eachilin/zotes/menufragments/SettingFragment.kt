@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import com.eachilin.zotes.ForgotPasswordOverlay
 import com.eachilin.zotes.LoginActivity
 import com.eachilin.zotes.R
 import com.eachilin.zotes.databinding.FragmentSettingBinding
@@ -21,6 +23,7 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var btnSignOut: Button
+    private lateinit var etReset :TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +54,24 @@ class SettingFragment : Fragment() {
 
         }
 
+        etReset.setOnClickListener {
+            openResetPassword()
+        }
+
+    }
+
+    private fun openResetPassword() {
+
+        val dialog = ForgotPasswordOverlay()
+        val fm = activity?.supportFragmentManager
+        if (fm != null) {
+            dialog.show(fm, "name")
+        }
     }
 
     private fun initView() {
         btnSignOut = binding.btnSignOut
+        etReset = binding.tvResetPassword
     }
 
     companion object {
