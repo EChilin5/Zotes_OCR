@@ -32,7 +32,7 @@ class ViewPagerAdapter(
                PokemonAdditionalDetails(this.name, this.id)
            }
            2->{
-               ShoppingDetails()
+               ShoppingDetails(this.name, this.id)
            }
            else->{
                Fragment()

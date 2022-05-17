@@ -1,26 +1,33 @@
 package com.eachilin.zotes.pokemondetailfragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.eachilin.zotes.R
 import com.eachilin.zotes.ReviewItemOverlay
 import com.eachilin.zotes.adapter.ReviewAdapter
 import com.eachilin.zotes.databinding.FragmentShoppingDetailsBinding
 import com.eachilin.zotes.modal.ReviewModal
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 
 private const val TAG = "ShoppingDetails"
-class ShoppingDetails : Fragment() {
+class ShoppingDetails(var name: String, var id: String) : Fragment() {
+
+
 
     private var _binding : FragmentShoppingDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var firestoreDB : FirebaseFirestore
 
     // adapter
     private lateinit var reviewPost : MutableList<ReviewModal>
@@ -53,6 +60,8 @@ class ShoppingDetails : Fragment() {
         btnflAddReview.setOnClickListener{
             openAddNewItem()
         }
+
+        fetchData()
     }
 
     private fun openAddNewItem() {
@@ -64,6 +73,7 @@ class ShoppingDetails : Fragment() {
     }
 
     private fun initView() {
+        Log.e(TAG, this.name)
         btnflAddReview = binding.flBtnReview
         rvItemReview = binding.rvItemReview
 
@@ -71,17 +81,33 @@ class ShoppingDetails : Fragment() {
         adapter = ReviewAdapter(reviewPost)
         rvItemReview.adapter = adapter
         rvItemReview.layoutManager = LinearLayoutManager(context)
+
+        firestoreDB = FirebaseFirestore.getInstance()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun fetchData(){
+        var reviewPostReference = firestoreDB.collection("zotesReviewPost")
+            .orderBy("creation_time_ms", Query.Direction.DESCENDING )
+        reviewPostReference = reviewPostReference.whereEqualTo("pokemonID", this.id)
+        reviewPostReference.addSnapshotListener { snapshot, exception ->
+            if(exception != null || snapshot == null){
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
 
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
 
-    companion object {
-
-        fun newInstance(param1: String, param2: String) =
-            ShoppingDetails().apply {
-                arguments = Bundle().apply {
-
+                    val reviewItem: ReviewModal = dc.document.toObject(ReviewModal::class.java)
+                    reviewPost.add(reviewItem)
                 }
             }
+            adapter.notifyDataSetChanged()
+        }
     }
+
+
+
+
 }
