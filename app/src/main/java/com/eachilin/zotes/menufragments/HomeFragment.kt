@@ -148,6 +148,8 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
                         return
                     }
+
+
                     restaurant.addAll(body.result)
                     adapter?.notifyDataSetChanged()
                 }

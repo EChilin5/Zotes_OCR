@@ -31,11 +31,11 @@ class ReviewAdapter (private val reviewPost: MutableList<ReviewModal>) : Recycle
     inner class ReviewPostViewHolder(itemView: ItemReviewsBinding) : RecyclerView.ViewHolder(itemView.root) {
         fun bind(post: ReviewModal, binding: ItemReviewsBinding?) {
             var tvName = binding?.tvReviewName
-            var tvRating = binding?.tvRating
+            var rbRating = binding?.rbReviewRating
             var tvDescription = binding?.tvReviewDescription
 
             tvName?.text = post.name
-            tvRating?.text = post.rating
+            rbRating?.rating = post.rating.toFloat()
             tvDescription?.text = post.description
         }
 
