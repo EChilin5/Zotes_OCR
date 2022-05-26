@@ -16,6 +16,7 @@ import com.eachilin.zotes.R
 import com.eachilin.zotes.databinding.ActivityMainBinding
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.menufragments.CartFragment
+import com.eachilin.zotes.menufragments.CompletedOrderFragment
 import com.eachilin.zotes.menufragments.HomeFragment
 import com.eachilin.zotes.menufragments.SettingFragment
 import com.eachilin.zotes.pokemon.PokemSearchResult
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment()
     private val cartFragment = CartFragment()
     private val settingFragment = SettingFragment()
+    private val orderFragment = CompletedOrderFragment()
 
     private lateinit var sqlCartHelper: CartHelper
 
@@ -78,6 +80,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.ic_cart -> {
 
                     openFragment(cartFragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.ic_order -> {
+
+                    openFragment(orderFragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.ic_setting -> {

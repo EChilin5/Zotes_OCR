@@ -5,17 +5,22 @@
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_home"
         android:enabled="true"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/ic_cart"
         android:enabled="true"
         android:icon="@drawable/ic_cart"
-        android:title="Cart" />
+        android:title="@string/cart" />
+    <item
+        android:id="@+id/ic_order"
+        android:enabled="true"
+        android:icon="@drawable/order"
+        android:title="@string/order" />
     <item
         android:id="@+id/ic_setting"
         android:enabled="true"
         android:icon="@drawable/setting"
-        android:title="Setting" />
+        android:title="@string/setting" />
 
 
 
