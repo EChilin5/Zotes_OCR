@@ -1,4 +1,4 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,9 +11,12 @@ import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.eachilin.zotes.DBhelper.CartHelper
+import com.eachilin.zotes.R
+import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.adapter.ViewPagerAdapter
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.modal.CartModal
+import com.eachilin.zotes.overlay.overlay_buy_now
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.lang.Exception

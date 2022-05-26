@@ -1,7 +1,6 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.overlay
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 class ReviewItemOverlay : DialogFragment() {
 
     private lateinit var _binding : FragmentReviewItemOverlayBinding
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private lateinit var firestoreDB : FirebaseFirestore
 
@@ -89,13 +88,5 @@ class ReviewItemOverlay : DialogFragment() {
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ReviewItemOverlay().apply {
-                arguments = Bundle().apply {
 
-                }
-            }
-    }
 }

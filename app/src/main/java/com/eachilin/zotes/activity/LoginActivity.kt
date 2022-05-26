@@ -1,4 +1,4 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+
 import com.eachilin.zotes.databinding.ActivityLoginBinding
+import com.eachilin.zotes.overlay.ForgotPasswordOverlay
 import com.google.firebase.auth.FirebaseAuth
 
 private const val TAG ="LoginActivity"

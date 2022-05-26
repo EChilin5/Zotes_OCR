@@ -1,5 +1,6 @@
 package com.eachilin.zotes.menufragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.eachilin.zotes.Checkout
 import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.PokeId
 import com.eachilin.zotes.R
+import com.eachilin.zotes.activity.Checkout
 import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.FragmentCartBinding
 import com.eachilin.zotes.modal.CartModal
@@ -59,16 +60,16 @@ class CartFragment : Fragment(), PokeId {
     }
 
     fun updateBadge(increase :Boolean){
-        var nav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
+        val nav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
 
-        var cartBadge = nav?.getOrCreateBadge(R.id.ic_cart)
+        val cartBadge = nav?.getOrCreateBadge(R.id.ic_cart)
         if(increase){
-            cartBadge?.number = cartBadge?.number?.plus(1)!!;
+            cartBadge?.number = cartBadge?.number?.plus(1)!!
         }else{
 
-            cartBadge?.number = cartBadge?.number?.minus(1)!!;
+            cartBadge?.number = cartBadge?.number?.minus(1)!!
         }
-        cartBadge?.isVisible = true
+        cartBadge.isVisible = true
 
     }
 
@@ -82,7 +83,7 @@ class CartFragment : Fragment(), PokeId {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         Toast.makeText(context, "call back ", Toast.LENGTH_SHORT).show()
         adapter.setOnClickItem { Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show() }
@@ -120,7 +121,7 @@ class CartFragment : Fragment(), PokeId {
 
     private fun openCheckout() {
         val intent = Intent(activity, Checkout::class.java)
-        intent.putExtra("pokeList", pokemonInfo);
+        intent.putExtra("pokeList", pokemonInfo)
         startActivity(intent)
     }
 
@@ -132,6 +133,7 @@ class CartFragment : Fragment(), PokeId {
         adapter.notifyDataSetChanged()
 
     }
+    @SuppressLint("SetTextI18n")
     private fun countTotalVal(){
         if(pokemonInfo.isEmpty()){
             count =0
@@ -140,9 +142,7 @@ class CartFragment : Fragment(), PokeId {
             for(item in pokemonInfo){
                 var price = item.pokeID?.toInt()?.times(15)
                 price = price!!.times(item.count)
-                if (price != null) {
-                    count += price
-                }
+                count += price
             }
         }
         tvFinalPrice.text = "$ $count"
@@ -202,13 +202,6 @@ class CartFragment : Fragment(), PokeId {
 
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartFragment().apply {
-
-            }
-    }
 
     override fun onAdapterRemoveItemClickListener(poke: CartModal) {
         sqlCartHelper.deleteStudentById(poke.id)

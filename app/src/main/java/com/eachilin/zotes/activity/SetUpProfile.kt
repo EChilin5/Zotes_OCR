@@ -1,4 +1,4 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.databinding.ActivitySetUpProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 

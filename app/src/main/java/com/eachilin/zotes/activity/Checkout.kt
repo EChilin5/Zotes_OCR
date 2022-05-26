@@ -1,8 +1,8 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.net.Uri.fromParts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,21 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.adapter.CheckoutAdapter
-import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.ActivityCheckoutBinding
-import com.eachilin.zotes.databinding.ActivityMainBinding
-import com.eachilin.zotes.databinding.FragmentCartBinding
-import com.eachilin.zotes.email.EmailService
 import com.eachilin.zotes.modal.CartModal
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.net.URI
-import java.util.ArrayList
-import javax.mail.internet.InternetAddress
+import com.eachilin.zotes.modal.OrderItemsModal
+import com.eachilin.zotes.modal.OrderModal
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.properties.Delegates
 
 private const val TAG = "Checkout"
 class Checkout : AppCompatActivity() {
 
+    private var count by Delegates.notNull<Long>()
     private lateinit var binding : ActivityCheckoutBinding
 
     private lateinit var etName: EditText
@@ -37,8 +37,11 @@ class Checkout : AppCompatActivity() {
     private lateinit var sqlCartHelper: CartHelper
 
     private var pokemon = ArrayList<CartModal>()
+    private var order = mutableListOf<OrderModal>()
+    private var orderItems = mutableListOf<OrderItemsModal>()
 
     private lateinit var rvCheckout:RecyclerView
+    private lateinit var firestoreDB:FirebaseFirestore
     private val adapter = CheckoutAdapter(pokemon)
 
 
@@ -47,7 +50,8 @@ class Checkout : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sqlCartHelper = this?.let { CartHelper(it) }!!
+        firestoreDB = FirebaseFirestore.getInstance()
+        sqlCartHelper = CartHelper(this)
 
 
         rvCheckout = binding.rvCheck
@@ -59,9 +63,11 @@ class Checkout : AppCompatActivity() {
         etAddress = binding.etAddress
         etEmail = binding.etEmail
         btnBuy = binding.btncBuyNow
-
-        btnBuy.setOnClickListener { checkout() }
         countTotalVal()
+        btnBuy.setOnClickListener {
+            completeOrder()
+        }
+
 
     }
 
@@ -70,13 +76,13 @@ class Checkout : AppCompatActivity() {
         Log.e(TAG, myList.toString())
 
             pokemon.addAll(myList!!)
-            adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
 
 
     }
 
     private fun countTotalVal(){
-        var count =0
+         count =0
         if(pokemon.isEmpty()){
             count =0
         }else{
@@ -84,12 +90,46 @@ class Checkout : AppCompatActivity() {
             for(item in pokemon){
                 var price = item.pokeID?.toInt()?.times(15)
                 price = price!!.times(item.count)
-                if (price != null) {
-                    count += price
-                }
+                count += price
             }
         }
         binding.tvcCost.text = "$ $count"
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun completeOrder(){
+        val email =getEmail()
+        for(orderInformation in pokemon){
+            var itemID = orderInformation.pokeID
+            var count = orderInformation.count
+            var pokemonLink =
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$itemID.png"
+            var cost = itemID?.toInt()?.times(15)
+            cost = cost?.times(orderInformation.count)
+
+            var newOrderItem = OrderItemsModal(orderInformation.name.toString(), pokemonLink,
+                cost?.toLong(), count)
+            orderItems.add(newOrderItem)
+        }
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = sdf.format(Date())
+        var newOrder = OrderModal("", currentDate,  count, email, orderItems  )
+        firestoreDB.collection("zotesOrder").add(newOrder)
+            .addOnCompleteListener { newZotesOrder->
+                if(newZotesOrder.isSuccessful){
+                    Log.e(TAG,"uploaded successfully")
+                    Toast.makeText(this, "uploadeded", Toast.LENGTH_SHORT).show()
+                    pokemon.clear()
+                    checkout()
+
+                }else{
+                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+
     }
 
     private fun checkout() {
@@ -107,7 +147,7 @@ class Checkout : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_SUBJECT, "Zotes Poke Order")
             intent.putExtra(Intent.EXTRA_TEXT, "Here is your oder Number. Thank you for shopping");
             sqlCartHelper.deletePokemonExist()
-            pokemon.clear()
+            //pokemon.clear()
             adapter.notifyDataSetChanged()
             startActivity(intent)
             if (intent.resolveActivity(packageManager) != null) {
@@ -126,6 +166,17 @@ class Checkout : AppCompatActivity() {
 //
 //        startActivity(Intent.createChooser(emailIntent, "Send email..."))
 
+    }
 
+    private fun getEmail():String{
+        val userName = Firebase.auth.currentUser
+        var currentUserName = ""
+        userName?.let {
+            for (profile in it.providerData) {
+                // Id of the provider (ex: google.com)
+                currentUserName = profile.email.toString()
+            }
+        }
+        return currentUserName
     }
 }

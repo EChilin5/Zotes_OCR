@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zotes">
         <activity
-            android:name=".SetUpProfile"
+            android:name=".activity.SetUpProfile"
             android:exported="true"
             android:label="@string/title_activity_set_up_profile"
             android:theme="@style/Theme.Zotes.NoActionBar" />
@@ -20,7 +20,7 @@
             android:name=".signup"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,14 +29,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Checkout"
+            android:name=".activity.Checkout"
             android:exported="true"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".PokemonDescription"
+            android:name=".activity.PokemonDescription"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>

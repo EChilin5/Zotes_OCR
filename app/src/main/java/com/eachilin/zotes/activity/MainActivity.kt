@@ -1,4 +1,4 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.activity
 
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.eachilin.zotes.DBhelper.CartHelper
+import com.eachilin.zotes.R
 import com.eachilin.zotes.databinding.ActivityMainBinding
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.menufragments.CartFragment
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
-        var status: Boolean = false
+
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.ic_home -> {
@@ -90,9 +91,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        var cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
-        cartBadge?.isVisible = true
-        cartBadge?.number = sqlCartHelper.count();
+        val cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
+        cartBadge.isVisible = true
+        cartBadge.number = sqlCartHelper.count()
 
         openFragment(homeFragment)
 
@@ -100,11 +101,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFragment(fragment: Fragment){
-        if(fragment != null){
-            val transaction =supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, fragment)
-            transaction.commit()
-        }
+        val transaction =supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
     }
 
 

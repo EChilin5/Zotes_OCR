@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.eachilin.zotes.R
-import com.eachilin.zotes.RestaurantsAdapter
+import com.eachilin.zotes.adapter.RestaurantsAdapter
 import com.eachilin.zotes.databinding.FragmentHomeBinding
 import com.eachilin.zotes.pokemon.PokemSearchResult
 import com.eachilin.zotes.pokemon.PokemonInitialData

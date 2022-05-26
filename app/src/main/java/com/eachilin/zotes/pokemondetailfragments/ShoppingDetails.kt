@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.eachilin.zotes.ReviewItemOverlay
+import com.eachilin.zotes.overlay.ReviewItemOverlay
 import com.eachilin.zotes.adapter.ReviewAdapter
 import com.eachilin.zotes.databinding.FragmentShoppingDetailsBinding
 import com.eachilin.zotes.modal.ReviewModal

@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.eachilin.zotes.ForgotPasswordOverlay
-import com.eachilin.zotes.LoginActivity
-import com.eachilin.zotes.R
+import com.eachilin.zotes.activity.LoginActivity
 import com.eachilin.zotes.databinding.FragmentSettingBinding
+import com.eachilin.zotes.overlay.ForgotPasswordOverlay
 import com.google.firebase.auth.FirebaseAuth
 
 

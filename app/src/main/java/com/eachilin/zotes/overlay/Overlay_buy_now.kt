@@ -1,9 +1,8 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.overlay
 
 import android.app.ActionBar
 import android.os.Bundle
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

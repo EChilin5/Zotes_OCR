@@ -89,8 +89,7 @@ class PokeCartAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
 //        sqlCartHelper = (parent.context)?.let { CartHelper() }
 
-
-        _binding = PokeShoppingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+          _binding = PokeShoppingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartViewHolder(_binding!!)
     }
 

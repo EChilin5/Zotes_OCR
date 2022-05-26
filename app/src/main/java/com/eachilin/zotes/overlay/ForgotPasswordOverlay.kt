@@ -1,4 +1,4 @@
-package com.eachilin.zotes
+package com.eachilin.zotes.overlay
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ private const val TAG = "ForgotPasswordOverlay"
 class ForgotPasswordOverlay : DialogFragment() {
 
     private lateinit var _binding : FragmentForgotPasswordOverlayBinding
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class ForgotPasswordOverlay : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentForgotPasswordOverlayBinding.inflate(inflater, container, false)
         return binding.root
