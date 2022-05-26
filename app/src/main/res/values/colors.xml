@@ -17,5 +17,7 @@
     <color name="item_background">#cdd4d2</color>
     <color name="default_background">#68d8d6</color>
     <color name="nav_bg_2">#f7f7ff</color>
+    <color name="lightgrey2">#EBEEF6</color>
+
 
 </resources>

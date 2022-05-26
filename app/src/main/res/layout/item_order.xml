@@ -11,6 +11,10 @@
         android:id="@+id/clItemOrderTopBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/lightgrey2"
+        android:elevation="12dp"
+        android:outlineProvider="none"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
