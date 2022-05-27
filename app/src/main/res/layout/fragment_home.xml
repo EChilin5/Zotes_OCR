@@ -19,31 +19,18 @@
         app:layout_constraintStart_toStartOf="@id/HomeGuideLineV1"
         app:layout_constraintTop_toBottomOf="@id/HomeGuideLine2" />
 
-    <TextView
-        android:id="@+id/tvPokeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/pokemon_eshop"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine1_5"
-        app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
-        app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
-        app:layout_constraintTop_toTopOf="@+id/HomeGuideLine1" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etSearchDetailLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="0dp"
 
+        android:layout_height="0dp"
         android:layout_margin="10dp"
         android:hint="Search"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintBottom_toTopOf="@+id/HomeGuideLine2"
         app:layout_constraintEnd_toStartOf="@+id/HomeGuideLineV2"
         app:layout_constraintStart_toStartOf="@+id/HomeGuideLineV1"
-        app:layout_constraintTop_toTopOf="@+id/HomeGuideLine1_5"
+        app:layout_constraintTop_toTopOf="@id/HomeGuideLine1"
         app:startIconDrawable="@drawable/ic_baseline_search_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +73,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGuideLine3"
@@ -95,13 +82,5 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGuideLine1_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

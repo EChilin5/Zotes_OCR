@@ -4,45 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clAddiontalInfo"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="120dp"
+    android:paddingStart="4dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="4dp">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/glIAhEnd"
+        app:layout_constraintEnd_toStartOf="@+id/glIAv1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/glIAv0"
+        app:layout_constraintTop_toTopOf="@id/glIAh0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvOAName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="@string/bulbasaur"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/glIAv2"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toEndOf="@id/glIAv1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.447" />
 
     <TextView
         android:id="@+id/tvOAPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="40dp"
         android:text="Price"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOAName" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glIAv2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvOAAmt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Amount"
+        app:layout_constraintEnd_toStartOf="@+id/glIAvEnd"
+        app:layout_constraintStart_toStartOf="@+id/glIAv2"
+        app:layout_constraintTop_toBottomOf="@+id/tvOAPrice" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAv0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="36dp"
-        android:text="Amount"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAvEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAh0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glIAhEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.95" />
+
+
+    <View
+        android:id="@+id/vLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOAPrice" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glIAhEnd" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
