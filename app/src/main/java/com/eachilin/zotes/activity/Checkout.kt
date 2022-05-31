@@ -83,7 +83,6 @@ class Checkout : AppCompatActivity() {
         etAddress = binding.etAddress
         etEmail = binding.etEmail
 //        btnBuy = binding.btncBuyNow
-        countTotalVal()
 
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
@@ -99,7 +98,6 @@ class Checkout : AppCompatActivity() {
     private fun goToMain() {
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        cartListener.remove()
         finish()
     }
 ///
@@ -204,6 +202,7 @@ class Checkout : AppCompatActivity() {
             Log.d("GooglePaymentToken", paymentMethodData
                 .getJSONObject("tokenizationData")
                 .getString("token"))
+            deleteCollection()
             goToMain()
 
         } catch (e: JSONException) {
@@ -211,6 +210,18 @@ class Checkout : AppCompatActivity() {
         }
 
     }
+
+    private fun deleteCollection() {
+        for(item in pokemon){
+            var items = firestoreDB.collection("zotesOrderCart").document(item.id.toString()).delete()
+            items.addOnCompleteListener {
+                Log.e(TAG, "deleted document ${item.id}")
+            }
+        }
+
+
+    }
+
     private fun handleError(statusCode: Int) {
         Log.w("loadPaymentData failed", String.format("Error code: %d", statusCode))
     }
@@ -235,6 +246,7 @@ class Checkout : AppCompatActivity() {
                 }
             }
             adapter.notifyDataSetChanged()
+            countTotalVal()
 
         }
 
@@ -281,7 +293,6 @@ class Checkout : AppCompatActivity() {
                 if(newZotesOrder.isSuccessful){
                     Log.e(TAG,"uploaded successfully")
                     Toast.makeText(this, "uploadeded", Toast.LENGTH_SHORT).show()
-                    pokemon.clear()
                     checkout()
 
                 }else{

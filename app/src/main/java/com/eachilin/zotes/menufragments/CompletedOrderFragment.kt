@@ -53,7 +53,7 @@ class CompletedOrderFragment : Fragment() {
 
     private fun fetchData() {
         val email = getEmail()
-        var orderCartReference = firestore.collection("zotesOrder").whereEqualTo("userOrderName", getEmail())
+        var orderCartReference = firestore.collection("zotesCompletedOrder").whereEqualTo("userOrderName", getEmail())
         orderCartReference.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
                 Log.e(TAG, "exception occurred", exception)
@@ -64,6 +64,7 @@ class CompletedOrderFragment : Fragment() {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: OrderModal = dc.document.toObject(OrderModal::class.java)
+
                     orderInfo.add(orderItem)
                 }
             }

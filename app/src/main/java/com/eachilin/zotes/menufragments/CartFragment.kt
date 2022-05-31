@@ -47,6 +47,13 @@ class CartFragment : Fragment(), PokeId {
 
     fun onItemDeleteClick(poke:CartItemModal){
         Log.e(TAG, "selecte ${poke.id}")
+        firestore.collection("zotesOrderCart").document(poke.id.toString()).delete().addOnCompleteListener {
+            if(it.isSuccessful){
+                Log.e(TAG, "deleted")
+                pokemonInfo.remove(poke)
+                adapter.notifyDataSetChanged()
+            }
+        }
 //        sqlCartHelper.deleteStudentById(poke.id.t)
         //fetchData()
         countTotalVal()
@@ -135,7 +142,7 @@ class CartFragment : Fragment(), PokeId {
         setHasOptionsMenu(true)
 
             fetchData()
-        countTotalVal()
+
 
 
     }
@@ -169,7 +176,7 @@ class CartFragment : Fragment(), PokeId {
                 }
             }
             adapter.notifyDataSetChanged()
-
+           countTotalVal()
         }
 
     }

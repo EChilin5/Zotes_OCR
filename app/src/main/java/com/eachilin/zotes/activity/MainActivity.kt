@@ -22,6 +22,8 @@ import com.eachilin.zotes.menufragments.SettingFragment
 import com.eachilin.zotes.pokemon.PokemSearchResult
 import com.eachilin.zotes.pokemon.PokemonInitialData
 import com.eachilin.zotes.pokemon.PokemonService
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val orderFragment = CompletedOrderFragment()
 
     private lateinit var sqlCartHelper: CartHelper
+    private lateinit var firestore: FirebaseFirestore
 
 
 
@@ -48,27 +51,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sqlCartHelper = CartHelper(this)
+        firestore = FirebaseFirestore.getInstance()
 
-//        binding.bottomNav.setOnItemSelectedListener {
-//            when(it.itemId){
-//                R.id.ic_home -> {
-//                    true
-//                    openFragment(homeFragment)
-//
-//                }
-//                R.id.ic_cart -> {
-//                    true
-//                    openFragment(cartFragment)
-//                }
-//                R.id.ic_setting -> {
-//                    true
-//                    openFragment(settingFragment)
-//                }
-//            }
-//            false
-//
-//        }
-
+        val auth = FirebaseAuth.getInstance()
+        val emailInfo = auth.currentUser?.email
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -98,9 +84,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        val cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
-        cartBadge.isVisible = true
-        cartBadge.number = sqlCartHelper.count()
+        val orderCartSize = firestore.collection("zotesOrderCart").whereEqualTo("user.username", emailInfo).get()
+        orderCartSize.addOnCompleteListener {
+            it.addOnCompleteListener {
+               // it.result.size()
+                val cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
+                cartBadge.isVisible = true
+                cartBadge.number = it.result.size()
+            }
+        }
+
+
+
 
         openFragment(homeFragment)
 
