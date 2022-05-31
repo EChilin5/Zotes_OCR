@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Checkout">
+    tools:context=".activity.Checkout">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCheck"
@@ -16,12 +16,12 @@
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"
         app:layout_constraintTop_toTopOf="@+id/CheckoutGuideLine5" />
 
-    <Button
+    <include
         android:id="@+id/btncBuyNow"
         android:layout_width="224dp"
         android:layout_height="48dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/complete_order"
+        layout="@layout/buy_with_googlepay_button"
         app:layout_constraintBottom_toBottomOf="@id/CheckoutGuideLineEnd"
         app:layout_constraintEnd_toEndOf="@id/CheckoutGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/CheckoutGuideLineV1"

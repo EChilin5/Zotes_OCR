@@ -4,12 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable-xxxhdpi/buy_with_googlepay_button_content_w.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/background.xml" value="0.38333333333333336" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/bottom_background_box.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/box.xml" value="0.37743589743589745" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/buy_with_googlepay_button_content.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/buynowbackground.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/checkoutbutton.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/circlebackground_amount_change.xml" value="0.209009009009009" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/googlepay_button_background.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/googlepay_button_content.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/googlepay_button_no_shadow_background.xml" value="0.3310810810810811" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/googlepay_button_overlay.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/ic_arrow.xml" value="0.28958333333333336" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.10990990990990991" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/ic_cart.xml" value="0.3310810810810811" />
@@ -35,6 +41,13 @@
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_pokemon_description.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_set_up_profile.xml" value="0.31756756756756754" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_signup.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/book_with_googlepay_button.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/book_with_googlepay_button_no_shadow.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/buy_with_googlepay_button.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/buy_with_googlepay_button_no_shadow.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/checkout_with_googlepay_button.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/checkout_with_googlepay_button_no_shadow.xml" value="0.3171171171171171" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/donate_with_googlepay_button.xml" value="0.3171171171171171" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_abilities.xml" value="0.3671875" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_cart.xml" value="0.19504504504504505" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_completed_order.xml" value="0.17800811176205497" />
@@ -45,13 +58,17 @@
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_review_item_overlay.xml" value="0.24048913043478262" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/fragment_shopping_details.xml" value="0.3671875" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/googlepay_button.xml" value="0.1" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/googlepay_button_no_shadow.xml" value="0.1" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/item_checkout.xml" value="0.22872340425531915" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/item_order.xml" value="0.3161231884057971" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/item_order_additional_infor.xml" value="0.3161231884057971" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/item_restaurant.xml" value="0.67" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/item_reviews.xml" value="0.29438405797101447" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/pay_with_googlepay_button.xml" value="0.1" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/poke_shopping.xml" value="0.22" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/textbox_input_background.xml" value="0.16304347826086957" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/view_in_googlepay_button.xml" value="0.1" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/menu/menu.xml" value="0.3671875" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/menu/menu_search.xml" value="0.3671875" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
