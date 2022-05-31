@@ -15,10 +15,18 @@ import com.eachilin.zotes.R
 import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.adapter.ViewPagerAdapter
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
+import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
+import com.eachilin.zotes.modal.UserModal
 import com.eachilin.zotes.overlay.overlay_buy_now
+import com.google.android.gms.tasks.Tasks.await
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -31,6 +39,7 @@ class PokemonDescription : AppCompatActivity() {
 
 
     private lateinit var sqlCartHelper: CartHelper
+    private lateinit var firestore :FirebaseFirestore
 
     override fun onStart() {
         super.onStart()
@@ -43,7 +52,7 @@ class PokemonDescription : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        firestore = FirebaseFirestore.getInstance()
         var name:String = ""
         var image:String = ""
         var id:String = ""
@@ -64,17 +73,15 @@ class PokemonDescription : AppCompatActivity() {
         }
 
 
-         var pokemonExistInCart =   sqlCartHelper.checkPokemonExist(id)
+       //  var pokemonExistInCart =   sqlCartHelper.checkPokemonExist(id)
 
-
+        var email = getEmail()
+        threadCouritineCheckItem(name, email)
 
         val btnAddToCart = binding.btnPokeAddToCart
 
         val btnBuyNos = binding.btnBuyNow
 
-        if(pokemonExistInCart){
-            btnAddToCart.isEnabled = false
-        }
 
         binding.btnBack.setOnClickListener {
 
@@ -83,7 +90,7 @@ class PokemonDescription : AppCompatActivity() {
             finish()
         }
 
-        Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()
 
         val cost = "$ " + (id!!.toInt() * 15).toString();
         btnAddToCart.setOnClickListener { addPokemon(id, name, image) }
@@ -130,16 +137,25 @@ class PokemonDescription : AppCompatActivity() {
         newFragment.show(supportFragmentManager, TAG)
     }
 
-    private fun getPokemon() {
-        try{
-            val pokeList = sqlCartHelper.getAllPokemon()
-            Log.i(TAG, "${pokeList.size}")
+    private fun threadCouritineCheckItem( itemName: String, email: String)= runBlocking {
+        async { isItemInCart(itemName, email) }
+//        if(isPresent.await()){
+//            binding.btnPokeAddToCart.isEnabled = false
+//
+//        }
+    }
 
-        }catch (e:Exception){
-            Log.e(TAG, e.message.toString())
+    private fun isItemInCart(itemName:String, email: String){
+        var colle =  firestore.collection("zotesOrderCart").whereEqualTo("user.username", email).whereEqualTo("name", itemName).get()
 
+        colle.addOnCompleteListener {
+            if(!it.result.isEmpty){
+                binding.btnPokeAddToCart.isEnabled = false
+                return@addOnCompleteListener
+            }
         }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -152,18 +168,26 @@ class PokemonDescription : AppCompatActivity() {
         val pokeListSize = sqlCartHelper.getAllPokemon()
         val primaryID = pokeListSize.size +1
 
-        val pokeList = CartModal(id=primaryID, name = name, pokeID = id, count = 1, orderPlace= "false", purchaseDate = formatted )
-        val status = sqlCartHelper.insertStudent(pokeList)
-        if(status > -1){
-            Toast.makeText(this, "Pokemon Added...", Toast.LENGTH_SHORT).show()
-        }else{
-                Toast.makeText(this, "Pokemon Not Added...", Toast.LENGTH_SHORT).show()
+
+        val user = UserModal("", getEmail())
+
+            val cartItem = CartItemModal("", name = name, pokeID = id, count = 1, user )
+        firestore.collection("zotesOrderCart").add(cartItem).addOnCompleteListener { it->
+            if(it.isSuccessful){
+                Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show()
+
+            }else{
+                Toast.makeText(this, "Cannot be added to cart", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
+    }
 
-
-
+    private fun getEmail():String{
+        val auth = FirebaseAuth.getInstance()
+        val emailInfo = auth.currentUser?.email.toString()
+        return emailInfo
     }
 
 

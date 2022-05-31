@@ -17,13 +17,16 @@ import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.adapter.CheckoutAdapter
 import com.eachilin.zotes.databinding.ActivityCheckoutBinding
 import com.eachilin.zotes.googlepay.PaymentsUtil
+import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
 import com.eachilin.zotes.modal.OrderItemsModal
 import com.eachilin.zotes.modal.OrderModal
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.ktx.Firebase
 import org.json.JSONArray
 import org.json.JSONException
@@ -37,6 +40,7 @@ private const val TAG = "Checkout"
 class Checkout : AppCompatActivity() {
 
 
+    private lateinit var cartListener: ListenerRegistration
     private var count by Delegates.notNull<Long>()
     private lateinit var binding : ActivityCheckoutBinding
 
@@ -46,7 +50,7 @@ class Checkout : AppCompatActivity() {
 
     private lateinit var sqlCartHelper: CartHelper
 
-    private var pokemon = ArrayList<CartModal>()
+    private var pokemon = ArrayList<CartItemModal>()
     private var order = mutableListOf<OrderModal>()
     private var orderItems = mutableListOf<OrderItemsModal>()
 
@@ -90,6 +94,13 @@ class Checkout : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun goToMain() {
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        cartListener.remove()
+        finish()
     }
 ///
 
@@ -146,6 +157,7 @@ class Checkout : AppCompatActivity() {
             AutoResolveHelper.resolveTask(
                 paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)
         }
+
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -192,6 +204,7 @@ class Checkout : AppCompatActivity() {
             Log.d("GooglePaymentToken", paymentMethodData
                 .getJSONObject("tokenizationData")
                 .getString("token"))
+            goToMain()
 
         } catch (e: JSONException) {
             Log.e("handlePaymentSuccess", "Error: " + e.toString())
@@ -206,14 +219,28 @@ class Checkout : AppCompatActivity() {
     ///
 
     private fun fetchData() {
-        val myList: ArrayList<CartModal>? = intent.getSerializableExtra("pokeList") as ArrayList<CartModal>?
-        Log.e(TAG, myList.toString())
+        val email = getEmail()
+        val cartQuery =  firestoreDB.collection("zotesOrderCart").whereEqualTo("user.username", email)
+        cartListener =  cartQuery.addSnapshotListener { snapshot, exception ->
+            if(exception != null || snapshot == null){
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
+            pokemon.clear()
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
 
-            pokemon.addAll(myList!!)
+                    val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
+                    pokemon.add(orderItem)
+                }
+            }
             adapter.notifyDataSetChanged()
 
+        }
 
     }
+
+
 
     private fun countTotalVal(){
          count =0
@@ -249,7 +276,7 @@ class Checkout : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = sdf.format(Date())
         var newOrder = OrderModal("", currentDate,  count, email, orderItems  )
-        firestoreDB.collection("zotesOrder").add(newOrder)
+        firestoreDB.collection("zotesCompletedOrder").add(newOrder)
             .addOnCompleteListener { newZotesOrder->
                 if(newZotesOrder.isSuccessful){
                     Log.e(TAG,"uploaded successfully")

@@ -11,12 +11,14 @@ import com.bumptech.glide.Glide
 import com.eachilin.zotes.R
 import com.eachilin.zotes.databinding.ActivityCheckoutBinding
 import com.eachilin.zotes.databinding.ItemCheckoutBinding
+import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
 import com.eachilin.zotes.modal.OrderItemsModal
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 private const val TAG = "CheckoutAdapter"
-class CheckoutAdapter(private val poke:MutableList<CartModal>): RecyclerView.Adapter<CheckoutAdapter.CartViewHolder>() {
+class CheckoutAdapter(private val poke:MutableList<CartItemModal>): RecyclerView.Adapter<CheckoutAdapter.CartViewHolder>() {
 
     private var _binding: ItemCheckoutBinding?=null
     private val binding get() = _binding!!
@@ -41,7 +43,7 @@ class CheckoutAdapter(private val poke:MutableList<CartModal>): RecyclerView.Ada
 
     class CartViewHolder(itemView: ItemCheckoutBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(poke: CartModal) {
+        fun bind(poke: CartItemModal) {
             var pokeImg :ImageView = itemView.findViewById(R.id.ivCheckPokemon)
             var name:TextView = itemView.findViewById(R.id.tvCheckPokeNameCart)
             var cost:TextView = itemView.findViewById(R.id.tvCheckCost)

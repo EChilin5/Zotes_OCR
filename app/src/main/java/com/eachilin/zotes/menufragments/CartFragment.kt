@@ -18,45 +18,66 @@ import com.eachilin.zotes.R
 import com.eachilin.zotes.activity.Checkout
 import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.FragmentCartBinding
+import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
+import com.eachilin.zotes.modal.OrderModal
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.ktx.Firebase
 
 
 private const val TAG = "CartFragment"
 private const val BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 class CartFragment : Fragment(), PokeId {
+    private lateinit var cartListener: ListenerRegistration
     private var _binding : FragmentCartBinding? = null
     private val binding get() = _binding!!
     private lateinit var btnBuyNow:Button
     private lateinit var tvFinalPrice : TextView
     private lateinit var sqlCartHelper: CartHelper
-    private var pokemonInfo = ArrayList<CartModal>()
+    private var pokemonInfo = ArrayList<CartItemModal>()
     private var count: Int = 0
     private val adapter = PokeCartAdapter(pokemonInfo, ::onItemDeleteClick, ::onIncrementPrice, ::onDecrementPrice)
     private lateinit var rvShopping :RecyclerView
+    private lateinit var firestore: FirebaseFirestore
 
-    fun onItemDeleteClick(poke:CartModal){
+    fun onItemDeleteClick(poke:CartItemModal){
         Log.e(TAG, "selecte ${poke.id}")
-        sqlCartHelper.deleteStudentById(poke.id)
-        fetchData()
+//        sqlCartHelper.deleteStudentById(poke.id.t)
+        //fetchData()
         countTotalVal()
     }
 
-    fun onIncrementPrice(postId: String, increasePrice: Int, countUpdate :Int){
+    fun onIncrementPrice(postId: Int, increasePrice: Int, countUpdate :Int, docId: String){
         count += increasePrice
-        sqlCartHelper.updatePokeCount(postId, countUpdate)
-        pokemonInfo[postId.toInt()-1].count = countUpdate
-        tvFinalPrice.text = count.toString()
+        updateInformation(postId, countUpdate, docId)
         updateBadge(true)
     }
 
-    fun onDecrementPrice(postId: String, increasePrice: Int, countUpdate :Int){
+    fun onDecrementPrice(postId: Int, increasePrice: Int, countUpdate :Int, docId:String){
         count -= increasePrice
-        sqlCartHelper.updatePokeCount(postId, count)
-        pokemonInfo[postId.toInt()-1].count = countUpdate
-        tvFinalPrice.text = count.toString()
+        updateInformation(postId, countUpdate, docId)
         updateBadge(false)
+    }
+
+    private fun updateInformation(postId: Int, countUpdate :Int, docId:String){
+        cartListener.remove()
+        updateFirebaseItemCount(docId, countUpdate)
+        pokemonInfo[postId].count = countUpdate
+        tvFinalPrice.text = count.toString()
+    }
+
+    private fun updateFirebaseItemCount(id: String,  updateCount: Int, ){
+        Log.e(TAG, "update count from cart ${updateCount}")
+        firestore.collection("zotesOrderCart").document(id).update("count", updateCount).addOnCompleteListener {
+            if(it.isSuccessful){
+                Log.e(TAG, " updated")
+            }
+        }
     }
 
     fun updateBadge(increase :Boolean){
@@ -98,7 +119,7 @@ class CartFragment : Fragment(), PokeId {
         super.onViewCreated(view, savedInstanceState)
 
         sqlCartHelper = context?.let { CartHelper(it) }!!
-
+        firestore = FirebaseFirestore.getInstance()
         rvShopping = binding.rvShoppingCart
         btnBuyNow = binding.btnCheckoutF
         tvFinalPrice = binding.tvFinalPrice
@@ -127,12 +148,39 @@ class CartFragment : Fragment(), PokeId {
 
     private fun fetchData() {
         pokemonInfo.clear()
-        val pokeList = sqlCartHelper.getAllPokemon()
-        Log.i( TAG, "${pokeList.size}")
-        pokemonInfo.addAll(pokeList)
-        adapter.notifyDataSetChanged()
+//        val pokeList = sqlCartHelper.getAllPokemon()
+//        Log.i( TAG, "${pokeList.size}")
+//        pokemonInfo.addAll(pokeList)
+//        adapter.notifyDataSetChanged()
+        val email = getEmail()
+        Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
+       val cartQuery =  firestore.collection("zotesOrderCart").whereEqualTo("user.username", email)
+       cartListener =  cartQuery.addSnapshotListener { snapshot, exception ->
+            if(exception != null || snapshot == null){
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
+            pokemonInfo.clear()
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
+
+                    val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
+                    pokemonInfo.add(orderItem)
+                }
+            }
+            adapter.notifyDataSetChanged()
+
+        }
 
     }
+
+    private fun getEmail(): String? {
+        val userName = Firebase.auth.currentUser
+        var currentUserName = userName?.email
+
+        return currentUserName
+    }
+
     @SuppressLint("SetTextI18n")
     private fun countTotalVal(){
         if(pokemonInfo.isEmpty()){
@@ -163,7 +211,7 @@ class CartFragment : Fragment(), PokeId {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                val temp = ArrayList<CartModal>()
+                val temp = ArrayList<CartItemModal>()
                 if(text?.isNotEmpty() == true){
                     for (poke in pokemonInfo){
                         if(poke.name?.contains(text) == true){

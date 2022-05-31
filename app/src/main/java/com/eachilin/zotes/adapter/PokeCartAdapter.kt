@@ -1,6 +1,7 @@
 package com.eachilin.zotes.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -10,14 +11,15 @@ import com.bumptech.glide.Glide
 import com.eachilin.zotes.R
 import com.eachilin.zotes.databinding.PokeShoppingBinding
 import com.eachilin.zotes.menufragments.CartFragment
+import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
 
 private const val TAG = "PokeCartAdapter"
 class PokeCartAdapter(
-    private var poke: ArrayList<CartModal>,
-    var onItemClicked: (CartModal) -> Unit,
-    var onIncrementPrice : (String, Int, Int) -> Unit,
-    var onDecrementPrice: (String, Int, Int) -> Unit
+    private var poke: ArrayList<CartItemModal>,
+    var onItemClicked: (CartItemModal) -> Unit,
+    var onIncrementPrice : (Int, Int, Int, String) -> Unit,
+    var onDecrementPrice: (Int, Int, Int, String) -> Unit
 ): RecyclerView.Adapter<PokeCartAdapter.CartViewHolder>() {
 
     private var _binding: PokeShoppingBinding?=null
@@ -38,51 +40,94 @@ class PokeCartAdapter(
 
     class CartViewHolder(itemView: PokeShoppingBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(poke: CartModal, onIncrementPrice: (String,Int, Int) -> Unit, onDecrementPrice: (String,Int, Int) -> Unit) {
+        fun bind(
+            position: Int,
+            poke: CartItemModal,
+            onIncrementPrice: (Int, Int, Int, String) -> Unit,
+            onDecrementPrice: (Int, Int, Int, String) -> Unit,
+            binding: PokeShoppingBinding
+        ) {
 
-            var tvPokemonName : TextView = itemView.findViewById(R.id.tvPokeNameCart)
-            var tvCost : TextView = itemView.findViewById(R.id.tvCost)
-            var pokeImg: ImageView = itemView.findViewById(R.id.ivOrderPokemon)
-            var tvRemove:ImageView = itemView.findViewById(R.id.ivRemove)
-            var tvAmount:TextView = itemView.findViewById(R.id.tvAmount)
-            var tvAdd:ImageView = itemView.findViewById(R.id.ivAdd)
+            var tvPokemonName : TextView = binding.tvPokeNameCart
+            var tvCost : TextView = binding.tvCost
+            var pokeImg: ImageView = binding.ivOrderPokemon
+            var tvRemove:ImageView = binding.ivRemove
+            var tvAmount:TextView = binding.tvAmount
+            var tvAdd:ImageView = binding.ivAdd
 
             tvAmount.text = poke.count.toString()
-            var amount: Int = (tvAmount.text as String).toInt()
 
+            // imageView
             var pokeID = poke.pokeID
-
             var pokemonLink =
                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$pokeID.png"
 
+            // id
+            var itemId = poke.pokeID!!.toInt()
+           // first load
             tvPokemonName.text = poke.name
-            var price = pokeID?.toInt()?.times(15)
-            price = price?.let { amount.toInt().times(it) }
+            // price
+            var price = itemId.times(15)
+            price = price.times(poke.count)
             tvCost.text = "$ $price"
 
-            tvRemove.setOnClickListener { if(amount > 0){
-                amount--;
-                tvAmount.text = amount.toString()
+            // remove
+            tvRemove.setOnClickListener{
+                if(poke.count != 1){
+                    Log.e(TAG, "removed")
+                    var array = updateItemCount(itemId, poke.count, false)
+                    onDecrementPrice(position, array[1], array[0], poke.id.toString() )
+                    Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
+                    tvAmount.text = array[0].toString()
+                    tvCost.text = array[1].toString()
 
-                var price = pokeID?.toInt()?.times(15)
-                onDecrementPrice(poke.id.toString(), price!!.toInt(), amount )
-                price = price?.let { amount.toInt().times(it) }
-                tvCost.text = "$ $price"
+                }
+
 
             }
-            }
-            tvAdd.setOnClickListener { amount++
-                tvAmount.text = amount.toString()
-                var price = pokeID?.toInt()?.times(15)
-                onIncrementPrice(poke.id.toString(), price!!.toInt(), amount)
-                price = price?.let { amount.toInt().times(it) }
-                tvCost.text = "$ $price"
+            // add
+            tvAdd.setOnClickListener {
+                Log.e(TAG, "added")
+                var array = updateItemCount(itemId, poke.count, true,)
+                onIncrementPrice(position, array[1], array[0], poke.id.toString() )
+                Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
+                tvAmount.text = array[0].toString()
+                tvCost.text = array[1].toString()
             }
 
             Glide.with(itemView.context)
                 .load(pokemonLink)
                 .into(pokeImg)
         }
+
+        @SuppressLint("SetTextI18n")
+        private fun updateItemCount(
+            itemId: Int,
+            count: Int,
+            isIncreased: Boolean, ): IntArray{
+            var itemValue = intArrayOf(0, 0)
+            var amount: Int = if(isIncreased){
+                count+1
+            }else{
+                count -1
+            }
+
+            Log.e(TAG, "updateItemCount function ")
+
+            // price
+            var price = itemId.times(15)
+            price = price.times(amount)
+
+            itemValue[0] = amount
+            itemValue[1] = price
+
+            return itemValue
+
+        }
+
+
+
+
 
     }
 
@@ -96,7 +141,7 @@ class PokeCartAdapter(
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 
         val poke = poke[position]
-        holder.bind(poke, onIncrementPrice, onDecrementPrice)
+        holder.bind(position, poke, onIncrementPrice, onDecrementPrice, binding)
 
 
         var btnRemove:ImageView = holder.itemView.findViewById(R.id.ivCtDelete)
