@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
     tools:context=".overlay.ReviewItemOverlay">
 
     <TextView
@@ -12,11 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/create_review"
+        android:text="Review"
         android:textColor="@color/black"
         android:textSize="36sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/glReviewVEnd"
+        app:layout_constraintStart_toStartOf="@id/glReviewV0"
+        app:layout_constraintTop_toTopOf="@id/glReviewH0" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etReviewNameLayout"
@@ -26,15 +28,14 @@
         android:hint="@string/name"
         app:boxStrokeColor="@color/teal_200"
         app:hintTextColor="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/glReviewVEnd"
+        app:layout_constraintStart_toStartOf="@id/glReviewV0"
         app:layout_constraintTop_toBottomOf="@+id/tvCreateReviewTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etReviewerName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,8 +47,8 @@
         android:hint="@string/rating"
         app:boxStrokeColor="@color/teal_200"
         app:hintTextColor="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/glReviewVEnd"
+        app:layout_constraintStart_toStartOf="@id/glReviewV0"
         app:layout_constraintTop_toBottomOf="@+id/etReviewNameLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -66,8 +67,8 @@
         android:hint="@string/description"
         app:boxStrokeColor="@color/teal_200"
         app:hintTextColor="@color/teal_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/glReviewVEnd"
+        app:layout_constraintStart_toStartOf="@id/glReviewV0"
         app:layout_constraintTop_toBottomOf="@+id/etReviewRatingLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -79,12 +80,43 @@
 
     <Button
         android:id="@+id/btnCreateReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/add_review"
+        app:layout_constraintEnd_toEndOf="@id/glReviewVEnd"
+        app:layout_constraintStart_toStartOf="@id/glReviewV0"
+        app:layout_constraintTop_toBottomOf="@+id/etReviewDescriptionLayout" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glReviewV0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/add_review"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etReviewDescriptionLayout" />
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="7dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glReviewVEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="7dp"
+        app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glReviewH0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="5dp"
+        app:layout_constraintGuide_percent="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
