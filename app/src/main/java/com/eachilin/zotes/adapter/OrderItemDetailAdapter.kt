@@ -41,6 +41,9 @@ class OrderItemDetailAdapter(private var item: List<OrderItemsModal>, private va
             binding.tvOAAmt.text = "Purchased: ${orderItem.amount}"
             binding.tvOAName.text = orderItem.name
             binding.tvOAPrice.text = "Price: $${orderItem.price}"
+
+
+
             Glide.with(itemView.context)
                 .load(orderItem.imageURL)
                 .into(binding.imageView)

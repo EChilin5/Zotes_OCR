@@ -2,6 +2,7 @@ package com.eachilin.zotes.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.eachilin.zotes.databinding.ItemReviewsBinding
 import com.eachilin.zotes.modal.ReviewModal
@@ -21,7 +22,7 @@ class ReviewAdapter (private val reviewPost: MutableList<ReviewModal>) : Recycle
 
     override fun onBindViewHolder(holder: ReviewPostViewHolder, position: Int) {
         val post = reviewPost[position]
-        holder.bind(post, binding)
+        holder.bind(post, binding, position, reviewPost.size-1)
     }
 
     override fun getItemCount(): Int {
@@ -29,10 +30,14 @@ class ReviewAdapter (private val reviewPost: MutableList<ReviewModal>) : Recycle
     }
 
     inner class ReviewPostViewHolder(itemView: ItemReviewsBinding) : RecyclerView.ViewHolder(itemView.root) {
-        fun bind(post: ReviewModal, binding: ItemReviewsBinding?) {
+        fun bind(post: ReviewModal, binding: ItemReviewsBinding?, position: Int, ListLength: Int) {
             var tvName = binding?.tvReviewName
             var rbRating = binding?.rbReviewRating
             var tvDescription = binding?.tvReviewDescription
+
+            if(position ==ListLength){
+                binding?.vLine?.isVisible = false
+            }
 
             tvName?.text = post.name
             rbRating?.rating = post.rating.toFloat()
