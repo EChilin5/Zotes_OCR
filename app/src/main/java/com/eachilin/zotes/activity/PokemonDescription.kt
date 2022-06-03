@@ -14,6 +14,7 @@ import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.R
 import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.adapter.ViewPagerAdapter
+import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
@@ -40,6 +41,7 @@ class PokemonDescription : AppCompatActivity() {
 
     private lateinit var sqlCartHelper: CartHelper
     private lateinit var firestore :FirebaseFirestore
+    private lateinit var product : BusinessSearchResultItem
 
     override fun onStart() {
         super.onStart()
@@ -58,19 +60,19 @@ class PokemonDescription : AppCompatActivity() {
         var id:String = ""
         sqlCartHelper = CartHelper(this)
 
-        val extras = intent.extras
-        if (extras != null) {
-             name = extras.getString("Name").toString()
-             image = extras.getString("Image").toString()
-             id = extras.getString("Id").toString()
+        product = intent.getSerializableExtra("businessProduct") as BusinessSearchResultItem
+
+             name = product.title
+
             //The key argument here must match that used in the other activity
             binding.tvPokemonName.text = name
-            binding.tvPokemonPrice.text = "$ " + (id!!.toInt() * 15).toString();
+            binding.tvPokemonPrice.text = "$ ${product.price}"
+            image = product.image
             Glide.with(this)
                 .load(image)
 //                .override(, 100)
                 .into(binding.ivPokemonDesc)
-        }
+
 
 
        //  var pokemonExistInCart =   sqlCartHelper.checkPokemonExist(id)
@@ -92,7 +94,7 @@ class PokemonDescription : AppCompatActivity() {
 
         //Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()
 
-        val cost = "$ " + (id!!.toInt() * 15).toString();
+        val cost = "$ ${product.price}"
         btnAddToCart.setOnClickListener { addPokemon(id, name, image) }
         btnBuyNos.setOnClickListener { openCheckout(image, name, cost) }
 

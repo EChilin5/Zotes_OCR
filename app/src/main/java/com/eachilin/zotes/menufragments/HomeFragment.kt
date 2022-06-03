@@ -9,11 +9,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eachilin.zotes.R
-import com.eachilin.zotes.adapter.RestaurantsAdapter
+import com.eachilin.zotes.adapter.BusinessAdapter
+import com.eachilin.zotes.api.BusinessSearchResult
+import com.eachilin.zotes.api.BusinessSearchResultItem
+import com.eachilin.zotes.api.BusinessService
 import com.eachilin.zotes.databinding.FragmentHomeBinding
-import com.eachilin.zotes.pokemon.PokemSearchResult
 import com.eachilin.zotes.pokemon.PokemonInitialData
-import com.eachilin.zotes.pokemon.PokemonService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,15 +22,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "HomeFragment"
-private const val BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
+private const val BASE_URL = "https://fakestoreapi.com/"
 class HomeFragment : Fragment() {
 
     private var _binding : FragmentHomeBinding? = null
     private val  binding get() = _binding!!
 
-    private val restaurant = mutableListOf<PokemonInitialData>()
-    private val  adapter = RestaurantsAdapter( restaurant)
-    private  lateinit var  rvRestaurant : RecyclerView
+    private val businessInfo = mutableListOf<BusinessSearchResultItem>()
+    private val  adapter = BusinessAdapter( businessInfo)
+    private  lateinit var  rvBussiness : RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,39 +53,33 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        rvRestaurant  = binding.rvRestaurants
+        rvBussiness  = binding.rvRestaurants
 
-        rvRestaurant.adapter = adapter
-        rvRestaurant.layoutManager = GridLayoutManager(context, 2)
-        if(restaurant.size == 0){
+        rvBussiness.adapter = adapter
+        rvBussiness.layoutManager = GridLayoutManager(context, 2)
+        if(businessInfo.size == 0){
             fetchData()
         }
 
-//        val pokeHome : ImageView = binding.ivPokeHome
-//
-//        Glide.with(this)
-//            .load(R.drawable.pokemon_1)
-//            .override(300, 300)
-//            .into(pokeHome)
 
         setHasOptionsMenu(true)
 
         binding.etSearchDetails.doAfterTextChanged { task ->
             var text= task
 
-            val temp = mutableListOf<PokemonInitialData>()
+            val temp = mutableListOf<BusinessSearchResultItem>()
             if(text?.isNotEmpty() == true){
-                for (poke in restaurant){
-                    if(poke.name.contains(text)){
-                        temp.add(poke)
+                for (item in businessInfo){
+                    if(item.title.contains(text)){
+                        temp.add(item)
                     }
                 }
             }
             if (text != null) {
                 if(text.isEmpty()){
-                    rvRestaurant.adapter = RestaurantsAdapter( restaurant)
+                    rvBussiness.adapter = BusinessAdapter( businessInfo)
                 }else{
-                    rvRestaurant.adapter = RestaurantsAdapter( temp)
+                    rvBussiness.adapter = BusinessAdapter( temp)
 
                 }
             }
@@ -105,19 +100,19 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                val temp = mutableListOf<PokemonInitialData>()
+                val temp = mutableListOf<BusinessSearchResultItem>()
                if(text?.isNotEmpty() == true){
-                   for (poke in restaurant){
-                        if(poke.name.contains(text)){
-                            temp.add(poke)
+                   for (item in businessInfo){
+                        if(item.title.contains(text)){
+                            temp.add(item)
                         }
                    }
                }
                 if (text != null) {
                     if(text.isEmpty()){
-                        rvRestaurant.adapter = RestaurantsAdapter( restaurant)
+                        rvBussiness.adapter = BusinessAdapter( businessInfo)
                     }else{
-                        rvRestaurant.adapter = RestaurantsAdapter( temp)
+                        rvBussiness.adapter = BusinessAdapter( temp)
 
                     }
                 }
@@ -133,29 +128,55 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchData() {
-        restaurant.clear()
+        businessInfo.clear()
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        val yelpService = retrofit.create(PokemonService::class.java)
-        yelpService.PokemonInfo("0", "151")
-            .enqueue(object : Callback<PokemSearchResult> {
-                override fun onResponse(call: Call<PokemSearchResult>, response: Response<PokemSearchResult>) {
-                    Log.i(TAG, "onResponse $response")
-                    val body = response.body()
-                    if(body == null){
-                        Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
-                        return
+        var businessService = retrofit.create(BusinessService::class.java)
+            businessService.BusinessInfo("3")
+                .enqueue(object : Callback<List<BusinessSearchResultItem>> {
+                    override fun onResponse(
+                        call: Call<List<BusinessSearchResultItem>>,
+                        response: Response<List<BusinessSearchResultItem>>
+                    ) {
+                        Log.i(TAG, "onResponse $response")
+                        var body = response.body()
+                        if(body == null){
+                            Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
+                            return
+                         }
+                        businessInfo.addAll(body)
+                        adapter.notifyDataSetChanged()
                     }
 
+                    override fun onFailure(
+                        call: Call<List<BusinessSearchResultItem>>,
+                        t: Throwable
+                    ) {
+                        Log.i(TAG, "onFailure $t")
+                    }
 
-                    restaurant.addAll(body.result)
-                    adapter?.notifyDataSetChanged()
-                }
+                })
 
-                override fun onFailure(call: Call<PokemSearchResult>, t: Throwable) {
-                    Log.i(TAG, "onFailuer $t")
-                }
-
-            })
+//        val businessService = retrofit.create(BusinessService::class.java)
+//        businessService.BusinessInfo("5")
+//            .enqueue(object : Callback<BusinessSearchResult> {
+//                override fun onResponse(call: Call<BusinessSearchResult>, response: Response<BusinessSearchResult>) {
+//                    Log.i(TAG, "onResponse $response")
+//                    val body = response.body()
+//                    if(body == null){
+//                        Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
+//                        return
+//                    }
+//
+//                    Log.e(TAG, "${body.products}")
+//                    businessInfo.addAll(body.products)
+//                    adapter?.notifyDataSetChanged()
+//                }
+//
+//                override fun onFailure(call: Call<BusinessSearchResult>, t: Throwable) {
+//                    Log.e(TAG, "onFailure $t")
+//                }
+//
+//            })
 
     }
 
