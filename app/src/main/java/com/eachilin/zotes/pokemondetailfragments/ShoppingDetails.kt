@@ -20,7 +20,7 @@ import com.google.firebase.firestore.Query
 
 
 private const val TAG = "ShoppingDetails"
-class ShoppingDetails(var name: String, var id: String) : Fragment() {
+class ShoppingDetails(var id: String) : Fragment() {
 
 
 
@@ -65,15 +65,19 @@ class ShoppingDetails(var name: String, var id: String) : Fragment() {
     }
 
     private fun openAddNewItem() {
+        var args = Bundle()
+        args.putString("id", this.id)
        val dialog = ReviewItemOverlay()
+        dialog.arguments = args
         val fm = activity?.supportFragmentManager
+
         if(fm != null){
             dialog.show(fm, "name")
         }
     }
 
     private fun initView() {
-        Log.e(TAG, this.name)
+
         btnflAddReview = binding.flBtnReview
         rvItemReview = binding.rvItemReview
 

@@ -5,30 +5,23 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.eachilin.zotes.DBhelper.CartHelper
 import com.eachilin.zotes.R
-import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.adapter.ViewPagerAdapter
 import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.databinding.ActivityPokemonDescriptionBinding
 import com.eachilin.zotes.modal.CartItemModal
-import com.eachilin.zotes.modal.CartModal
 import com.eachilin.zotes.modal.UserModal
 import com.eachilin.zotes.overlay.overlay_buy_now
-import com.google.android.gms.tasks.Tasks.await
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import java.lang.Exception
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -66,16 +59,14 @@ class PokemonDescription : AppCompatActivity() {
 
             //The key argument here must match that used in the other activity
             binding.tvPokemonName.text = name
-            binding.tvPokemonPrice.text = "$ ${product.price}"
+
             image = product.image
             Glide.with(this)
                 .load(image)
-//                .override(, 100)
                 .into(binding.ivPokemonDesc)
 
 
 
-       //  var pokemonExistInCart =   sqlCartHelper.checkPokemonExist(id)
 
         var email = getEmail()
         threadCouritineCheckItem(name, email)
@@ -102,7 +93,7 @@ class PokemonDescription : AppCompatActivity() {
         val tabLayout = binding.tabLayout
         val viewPager2 = findViewById<ViewPager2>(R.id.view_pokemonInfo)
 
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, name, id)
+        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle, product)
 
         viewPager2.adapter = adapter
 
@@ -165,15 +156,14 @@ class PokemonDescription : AppCompatActivity() {
         val current = LocalDateTime.now()
 
         val formatter = DateTimeFormatter.BASIC_ISO_DATE
-        val formatted = current.format(formatter)
-
-        val pokeListSize = sqlCartHelper.getAllPokemon()
-        val primaryID = pokeListSize.size +1
+//        val formatted = current.format(formatter)
+//
+//        val pokeListSize = sqlCartHelper.getAllPokemon()
 
 
         val user = UserModal("", getEmail())
 
-            val cartItem = CartItemModal("", name = name, pokeID = id, count = 1, user )
+            val cartItem = CartItemModal("", name = name, itemId = product.id.toString(), count = 1, price= product.price, product.image, user )
         firestore.collection("zotesOrderCart").add(cartItem).addOnCompleteListener { it->
             if(it.isSuccessful){
                 Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show()

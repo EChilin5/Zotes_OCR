@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.databinding.FragmentPokemonAdditionalDetailsBinding
 import com.eachilin.zotes.pokemon.*
 import retrofit2.Call
@@ -27,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
 
 private const val BASE_URL = "https://pokeapi.co/api/v2/"
 private const val TAG = "PokemonAdditionalDetails"
-class PokemonAdditionalDetails(var name: String, var id: String) : Fragment() {
+class PokemonAdditionalDetails(var business: BusinessSearchResultItem) : Fragment() {
 
     private var _binding : FragmentPokemonAdditionalDetailsBinding? = null
     private val  binding get() = _binding!!
@@ -51,32 +52,10 @@ class PokemonAdditionalDetails(var name: String, var id: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchData()
+        binding.Details.text = business.description
     }
 
-    private fun fetchData() {
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        val yelpService = retrofit.create(PokeDexInformation::class.java)
-        yelpService.PokedexEntry(this.id)
-            .enqueue(object : Callback<PokemonPokedexEntry> {
-                override fun onResponse(call: Call<PokemonPokedexEntry>, response: Response<PokemonPokedexEntry>) {
-                    Log.i(TAG, "onResponse $response")
-                    val body = response.body()
-                    if(body == null){
-                        Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
-                        return
-                    }
-                    poke.addAll(body.entries)
-                    binding.Details.text = poke[0].info;
-                }
 
-                override fun onFailure(call: Call<PokemonPokedexEntry>, t: Throwable) {
-                    Log.i(TAG, "onFailuer $t")
-                }
-
-            })
-
-    }
 
 
 

@@ -52,26 +52,22 @@ class ReviewItemOverlay : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
+        var id : String = arguments?.get("id") as String
+
         btnAddItem.setOnClickListener {
-            addItemReview()
+            addItemReview(id)
             this.dismiss()
         }
 
     }
 
-    private fun addItemReview(){
+    private fun addItemReview(id: String) {
         val userName = Firebase.auth.currentUser
-        var currentUserName = ""
-        userName?.let {
-            for (profile in it.providerData) {
-                // Id of the provider (ex: google.com)
-                currentUserName = profile.email.toString()
-            }
-        }
-        currentUserName = currentUserName.dropLast(10)
+        var currentUserName = userName?.email.toString()
+
 
         val user = UserModal("", currentUserName)
-        val review = ReviewModal("", etName.text.toString(), etRating.text.toString(), etDescription.text.toString(), "1", System.currentTimeMillis(), user)
+        val review = ReviewModal("", etName.text.toString(), etRating.text.toString(), etDescription.text.toString(), id, System.currentTimeMillis(), user)
 
         firestoreDB.collection("zotesReviewPost").add(review)
             .addOnCompleteListener { reviewCreation ->

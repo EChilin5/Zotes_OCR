@@ -16,10 +16,10 @@ import com.eachilin.zotes.modal.CartModal
 
 private const val TAG = "PokeCartAdapter"
 class PokeCartAdapter(
-    private var poke: ArrayList<CartItemModal>,
+    private var productInfo: ArrayList<CartItemModal>,
     var onItemClicked: (CartItemModal) -> Unit,
-    var onIncrementPrice : (Int, Int, Int, String) -> Unit,
-    var onDecrementPrice: (Int, Int, Int, String) -> Unit
+    var onIncrementPrice : (Int, Double, Int, String) -> Unit,
+    var onDecrementPrice: (Int, Double, Int, String) -> Unit
 ): RecyclerView.Adapter<PokeCartAdapter.CartViewHolder>() {
 
     private var _binding: PokeShoppingBinding?=null
@@ -42,9 +42,9 @@ class PokeCartAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(
             position: Int,
-            poke: CartItemModal,
-            onIncrementPrice: (Int, Int, Int, String) -> Unit,
-            onDecrementPrice: (Int, Int, Int, String) -> Unit,
+            product: CartItemModal,
+            onIncrementPrice: (Int, Double, Int, String) -> Unit,
+            onDecrementPrice: (Int, Double, Int, String) -> Unit,
             binding: PokeShoppingBinding
         ) {
 
@@ -55,28 +55,25 @@ class PokeCartAdapter(
             var tvAmount:TextView = binding.tvAmount
             var tvAdd:ImageView = binding.ivAdd
 
-            tvAmount.text = poke.count.toString()
+            tvAmount.text = product.count.toString()
 
             // imageView
-            var pokeID = poke.pokeID
-            var pokemonLink =
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$pokeID.png"
-
-            // id
-            var itemId = poke.pokeID!!.toInt()
+            var imageLink = product.image
+            //
            // first load
-            tvPokemonName.text = poke.name
+            tvPokemonName.text = product.name
             // price
-            var price = itemId.times(15)
-            price = price.times(poke.count)
+            var price = product.price.times(product.count)
             tvCost.text = "$ $price"
 
             // remove
             tvRemove.setOnClickListener{
-                if(poke.count != 1){
+                if(product.count != 1){
                     Log.e(TAG, "removed")
-                    var array = updateItemCount(itemId, poke.count, false)
-                    onDecrementPrice(position, array[1], array[0], poke.id.toString() )
+                    var array = updateItemCount(product.price, product.count, false)
+                    var newCount = array[0].toInt()
+                    var newPrice = array[1]
+                    onDecrementPrice(position, newPrice, newCount, product.id.toString() )
                     Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
                     tvAmount.text = array[0].toString()
                     tvCost.text = array[1].toString()
@@ -88,24 +85,26 @@ class PokeCartAdapter(
             // add
             tvAdd.setOnClickListener {
                 Log.e(TAG, "added")
-                var array = updateItemCount(itemId, poke.count, true,)
-                onIncrementPrice(position, array[1], array[0], poke.id.toString() )
+                var array = updateItemCount(product.price, product.count, true,)
+                var newCount = array[0].toInt()
+                var newPrice = array[1]
+                onIncrementPrice(position, newPrice, newCount, product.id.toString() )
                 Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
-                tvAmount.text = array[0].toString()
-                tvCost.text = array[1].toString()
+                tvAmount.text = newCount.toString()
+                tvCost.text = newPrice.toString()
             }
 
             Glide.with(itemView.context)
-                .load(pokemonLink)
+                .load(imageLink)
                 .into(pokeImg)
         }
 
         @SuppressLint("SetTextI18n")
         private fun updateItemCount(
-            itemId: Int,
+            price: Double,
             count: Int,
-            isIncreased: Boolean, ): IntArray{
-            var itemValue = intArrayOf(0, 0)
+            isIncreased: Boolean, ): DoubleArray {
+            var itemValue = doubleArrayOf(0.0, 0.0)
             var amount: Int = if(isIncreased){
                 count+1
             }else{
@@ -115,10 +114,9 @@ class PokeCartAdapter(
             Log.e(TAG, "updateItemCount function ")
 
             // price
-            var price = itemId.times(15)
-            price = price.times(amount)
+            var price = price.times(amount)
 
-            itemValue[0] = amount
+            itemValue[0] = amount.toDouble()
             itemValue[1] = price
 
             return itemValue
@@ -140,7 +138,7 @@ class PokeCartAdapter(
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 
-        val poke = poke[position]
+        val poke = productInfo[position]
         holder.bind(position, poke, onIncrementPrice, onDecrementPrice, binding)
 
 
@@ -153,6 +151,6 @@ class PokeCartAdapter(
     }
 
     override fun getItemCount(): Int {
-        return poke.size
+        return productInfo.size
     }
 }

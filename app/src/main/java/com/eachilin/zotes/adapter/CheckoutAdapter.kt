@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 private const val TAG = "CheckoutAdapter"
-class CheckoutAdapter(private val poke:MutableList<CartItemModal>): RecyclerView.Adapter<CheckoutAdapter.CartViewHolder>() {
+class CheckoutAdapter(private val productInfo:MutableList<CartItemModal>): RecyclerView.Adapter<CheckoutAdapter.CartViewHolder>() {
 
     private var _binding: ItemCheckoutBinding?=null
     private val binding get() = _binding!!
@@ -33,34 +33,31 @@ class CheckoutAdapter(private val poke:MutableList<CartItemModal>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val poke = poke[position]
-        holder.bind(poke)
+        val item = productInfo[position]
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-       return poke.size
+       return productInfo.size
     }
 
     class CartViewHolder(itemView: ItemCheckoutBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(poke: CartItemModal) {
+        fun bind(item: CartItemModal) {
             var pokeImg :ImageView = itemView.findViewById(R.id.ivCheckPokemon)
             var name:TextView = itemView.findViewById(R.id.tvCheckPokeNameCart)
             var cost:TextView = itemView.findViewById(R.id.tvCheckCost)
 
-            name.text = poke.name
-            var pokeCost  = poke.pokeID?.toInt()?.times(15)
-            Log.e(TAG, "$pokeCost + first")
-            pokeCost = pokeCost?.times(poke.count)
-            Log.e(TAG, "$pokeCost + seconf + ${poke.count}")
+            name.text = item.name
+            var pokeCost  = item.count.times(item.price)
+
 
             cost.text = "$ $pokeCost"
-            var pokeID = poke.pokeID
-            var pokemonLink =
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$pokeID.png"
+
+            var imageLink = item.image
 
             Glide.with(itemView.context)
-                .load(pokemonLink)
+                .load(imageLink)
 //                .override(, 100)
                 .into(pokeImg)
         }

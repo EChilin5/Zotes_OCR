@@ -7,7 +7,9 @@ data class CartItemModal(
     @DocumentId
     val id: String?=null,
     var name:String?="",
-    var pokeID:String?="",
+    var itemId:String?="",
     var count:Int =1,
+    var price:Double=0.0,
+    var image:String="",
     var user:UserModal?=null
 ):Serializable

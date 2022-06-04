@@ -7,7 +7,7 @@ data class OrderModal(
     @DocumentId
     val id: String? = null,
     var date: String = "",
-    var TotalPrice: Long = 0,
+    var TotalPrice: Double = 0.0,
     var userOrderName: String = "",
     var Item: List<OrderItemsModal> = emptyList()
 ):Serializable

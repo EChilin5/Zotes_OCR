@@ -39,18 +39,18 @@ class CartFragment : Fragment(), PokeId {
     private lateinit var btnBuyNow:Button
     private lateinit var tvFinalPrice : TextView
     private lateinit var sqlCartHelper: CartHelper
-    private var pokemonInfo = ArrayList<CartItemModal>()
-    private var count: Int = 0
-    private val adapter = PokeCartAdapter(pokemonInfo, ::onItemDeleteClick, ::onIncrementPrice, ::onDecrementPrice)
+    private var cartNewItems = ArrayList<CartItemModal>()
+    private var count: Double = 0.0
+    private val adapter = PokeCartAdapter(cartNewItems, ::onItemDeleteClick, ::onIncrementPrice, ::onDecrementPrice)
     private lateinit var rvShopping :RecyclerView
     private lateinit var firestore: FirebaseFirestore
 
-    fun onItemDeleteClick(poke:CartItemModal){
-        Log.e(TAG, "selecte ${poke.id}")
-        firestore.collection("zotesOrderCart").document(poke.id.toString()).delete().addOnCompleteListener {
+    fun onItemDeleteClick(item:CartItemModal){
+        Log.e(TAG, "selecte ${item.id}")
+        firestore.collection("zotesOrderCart").document(item.id.toString()).delete().addOnCompleteListener {
             if(it.isSuccessful){
                 Log.e(TAG, "deleted")
-                pokemonInfo.remove(poke)
+                cartNewItems.remove(item)
                 adapter.notifyDataSetChanged()
             }
         }
@@ -59,13 +59,13 @@ class CartFragment : Fragment(), PokeId {
         countTotalVal()
     }
 
-    fun onIncrementPrice(postId: Int, increasePrice: Int, countUpdate :Int, docId: String){
+    fun onIncrementPrice(postId: Int, increasePrice: Double, countUpdate :Int, docId: String){
         count += increasePrice
         updateInformation(postId, countUpdate, docId)
         updateBadge(true)
     }
 
-    fun onDecrementPrice(postId: Int, increasePrice: Int, countUpdate :Int, docId:String){
+    fun onDecrementPrice(postId: Int, increasePrice: Double, countUpdate :Int, docId:String){
         count -= increasePrice
         updateInformation(postId, countUpdate, docId)
         updateBadge(false)
@@ -74,7 +74,7 @@ class CartFragment : Fragment(), PokeId {
     private fun updateInformation(postId: Int, countUpdate :Int, docId:String){
         cartListener.remove()
         updateFirebaseItemCount(docId, countUpdate)
-        pokemonInfo[postId].count = countUpdate
+        cartNewItems[postId].count = countUpdate
         tvFinalPrice.text = count.toString()
     }
 
@@ -149,12 +149,12 @@ class CartFragment : Fragment(), PokeId {
 
     private fun openCheckout() {
         val intent = Intent(activity, Checkout::class.java)
-        intent.putExtra("pokeList", pokemonInfo)
+        intent.putExtra("pokeList", cartNewItems)
         startActivity(intent)
     }
 
     private fun fetchData() {
-        pokemonInfo.clear()
+        cartNewItems.clear()
 //        val pokeList = sqlCartHelper.getAllPokemon()
 //        Log.i( TAG, "${pokeList.size}")
 //        pokemonInfo.addAll(pokeList)
@@ -167,12 +167,12 @@ class CartFragment : Fragment(), PokeId {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
-            pokemonInfo.clear()
+           cartNewItems.clear()
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
-                    pokemonInfo.add(orderItem)
+                    cartNewItems.add(orderItem)
                 }
             }
             adapter.notifyDataSetChanged()
@@ -190,69 +190,15 @@ class CartFragment : Fragment(), PokeId {
 
     @SuppressLint("SetTextI18n")
     private fun countTotalVal(){
-        if(pokemonInfo.isEmpty()){
-            count =0
+        if(cartNewItems.isEmpty()){
+            count =0.0
         }else{
-            count = 0
-            for(item in pokemonInfo){
-                var price = item.pokeID?.toInt()?.times(15)
-                price = price!!.times(item.count)
-                count += price
+            count = 0.0
+            for(item in cartNewItems){
+                count += item.price
             }
         }
         tvFinalPrice.text = "$ $count"
-    }
-
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
-
-        val search : MenuItem? = menu.findItem(R.id.nav_search)
-        val searchView : SearchView = search?.actionView as SearchView
-        searchView.queryHint = "Search Cart"
-
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(text: String?): Boolean {
-                val temp = ArrayList<CartItemModal>()
-                if(text?.isNotEmpty() == true){
-                    for (poke in pokemonInfo){
-                        if(poke.name?.contains(text) == true){
-                            temp.add(poke)
-                        }
-                    }
-                }
-                if (text != null) {
-                    if(text.isEmpty()){
-                        rvShopping.adapter = PokeCartAdapter(
-                            pokemonInfo,
-                            ::onItemDeleteClick,
-                            ::onIncrementPrice,
-                            ::onDecrementPrice
-                        )
-                    }else{
-                        rvShopping.adapter = PokeCartAdapter(
-                            temp,
-                            ::onItemDeleteClick,
-                            ::onIncrementPrice,
-                            ::onDecrementPrice
-                        )
-
-                    }
-                }
-
-                return true
-            }
-
-        })
-
-
-        return super.onCreateOptionsMenu(menu, inflater)
-
     }
 
 

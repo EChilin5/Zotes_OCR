@@ -41,7 +41,7 @@ class Checkout : AppCompatActivity() {
 
 
     private lateinit var cartListener: ListenerRegistration
-    private var count by Delegates.notNull<Long>()
+    private var count by Delegates.notNull<Double>()
     private lateinit var binding : ActivityCheckoutBinding
 
     private lateinit var etName: EditText
@@ -50,13 +50,12 @@ class Checkout : AppCompatActivity() {
 
     private lateinit var sqlCartHelper: CartHelper
 
-    private var pokemon = ArrayList<CartItemModal>()
-    private var order = mutableListOf<OrderModal>()
+    private var productOrder = ArrayList<CartItemModal>()
     private var orderItems = mutableListOf<OrderItemsModal>()
 
     private lateinit var rvCheckout:RecyclerView
     private lateinit var firestoreDB:FirebaseFirestore
-    private val adapter = CheckoutAdapter(pokemon)
+    private val adapter = CheckoutAdapter(productOrder)
 
 
     private val SHIPPING_COST_CENTS = 9 * PaymentsUtil.CENTS.toLong()
@@ -212,7 +211,7 @@ class Checkout : AppCompatActivity() {
     }
 
     private fun deleteCollection() {
-        for(item in pokemon){
+        for(item in productOrder){
             var items = firestoreDB.collection("zotesOrderCart").document(item.id.toString()).delete()
             items.addOnCompleteListener {
                 Log.e(TAG, "deleted document ${item.id}")
@@ -237,12 +236,12 @@ class Checkout : AppCompatActivity() {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
-            pokemon.clear()
+            productOrder.clear()
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
-                    pokemon.add(orderItem)
+                    productOrder.add(orderItem)
                 }
             }
             adapter.notifyDataSetChanged()
@@ -255,15 +254,13 @@ class Checkout : AppCompatActivity() {
 
 
     private fun countTotalVal(){
-         count =0
-        if(pokemon.isEmpty()){
-            count =0
+         count =0.0
+        if(productOrder.isEmpty()){
+            count =0.0
         }else{
-            count = 0
-            for(item in pokemon){
-                var price = item.pokeID?.toInt()?.times(15)
-                price = price!!.times(item.count)
-                count += price
+            count = 0.0
+            for(item in productOrder){
+                count += item.price.times(item.count)
             }
         }
         binding.tvcCost.text = "$ $count"
@@ -272,15 +269,14 @@ class Checkout : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     private fun completeOrder(){
         val email =getEmail()
-        for(orderInformation in pokemon){
-            var itemID = orderInformation.pokeID
+        for(orderInformation in productOrder){
+            var itemID = orderInformation.itemId
             var count = orderInformation.count
-            var pokemonLink =
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/$itemID.png"
-            var cost = itemID?.toInt()?.times(15)
-            cost = cost?.times(orderInformation.count)
+            var imageLink = orderInformation.image
 
-            var newOrderItem = OrderItemsModal(orderInformation.name.toString(), pokemonLink,
+            var cost = orderInformation.count.times(orderInformation.price)
+
+            var newOrderItem = OrderItemsModal(orderInformation.name.toString(), imageLink,
                 cost?.toLong(), count)
             orderItems.add(newOrderItem)
         }
