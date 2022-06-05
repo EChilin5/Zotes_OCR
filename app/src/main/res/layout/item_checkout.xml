@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="144dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
@@ -26,7 +26,6 @@
             android:id="@+id/ivCheckPokemon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/pokebox"
             android:contentDescription="@string/pokesampleimage"
             app:layout_constraintBottom_toTopOf="@+id/ShoppingBoxGL2"
             app:layout_constraintEnd_toStartOf="@+id/ShoppingBoxGLV2"
@@ -38,12 +37,14 @@
 
         <TextView
             android:id="@+id/tvCheckPokeNameCart"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:paddingEnd="5dp"
             android:text="@string/bulbasaur"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ShoppingBoxGLV2"
             app:layout_constraintTop_toTopOf="@id/ShoppingBoxGL1" />
 
@@ -94,7 +95,7 @@
             android:gravity="center_horizontal"
             android:padding="2dp"
             android:text="@string/cost_500"
-            android:textSize="24sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/ShoppingBoxGL2"
             app:layout_constraintEnd_toStartOf="@+id/ShoppingBoxGLV3"
             app:layout_constraintHorizontal_bias="0.0"

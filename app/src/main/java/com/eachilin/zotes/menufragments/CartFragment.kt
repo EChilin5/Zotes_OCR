@@ -27,6 +27,8 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.ktx.Firebase
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
 private const val TAG = "CartFragment"
@@ -198,6 +200,8 @@ class CartFragment : Fragment(), PokeId {
                 count += item.price
             }
         }
+        val finalcount = BigDecimal(count).setScale(2, RoundingMode.HALF_EVEN)
+        count = finalcount.toDouble()
         tvFinalPrice.text = "$ $count"
     }
 

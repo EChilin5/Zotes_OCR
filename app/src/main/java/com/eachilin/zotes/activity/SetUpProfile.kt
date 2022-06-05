@@ -37,9 +37,9 @@ class SetUpProfile : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
 
-            var email = etEmail.text.trim().toString()
-            var password = etPassword.text.trim().toString()
-            var confirm = etConfirmPassword.text.trim().toString()
+            var email = etEmail.text.toString().trim()
+            var password = etPassword.text.toString().trim()
+            var confirm = etConfirmPassword.text.toString().trim()
 
             if (email.isEmpty() || confirm.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Missing Infromation", Toast.LENGTH_LONG).show()
@@ -47,21 +47,19 @@ class SetUpProfile : AppCompatActivity() {
             }
             btnSubmit.isEnabled = false
 
-            if (password == confirm && email.contains(
-                    "@"
-                )
+            if (password == confirm && email.contains("@")
             ) {
-                var isNewUser: Boolean = checkForValidEmail(email)
+                checkForValidEmail(email,password)
 
-                if (isNewUser) {
-                    createUserAccount(email,password)
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Email already exist, Please use a different email",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+//                if (isNewUser) {
+//                    createUserAccount(email,password)
+//                } else {
+//                    Toast.makeText(
+//                        this,
+//                        "Email already exist, Please use a different email",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
 
             } else {
                 btnSubmit.isEnabled = true
@@ -98,14 +96,14 @@ class SetUpProfile : AppCompatActivity() {
 
     }
 
-    private fun  checkForValidEmail(email:String) :Boolean{
+    private fun  checkForValidEmail(email:String,password: String) :Boolean{
         var isValidUser: Boolean = false
         val auth = FirebaseAuth.getInstance()
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task->
             var isNewUser:Boolean = task.result.signInMethods?.isEmpty() == true;
 
             if(isNewUser){
-                isValidUser = true
+                createUserAccount(email,password)
             }
         }
 

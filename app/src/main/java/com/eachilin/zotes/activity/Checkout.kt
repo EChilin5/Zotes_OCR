@@ -32,6 +32,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
@@ -263,6 +264,8 @@ class Checkout : AppCompatActivity() {
                 count += item.price.times(item.count)
             }
         }
+        val finalcount = BigDecimal(count).setScale(2, RoundingMode.HALF_EVEN)
+        count = finalcount.toDouble()
         binding.tvcCost.text = "$ $count"
     }
 

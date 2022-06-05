@@ -17,7 +17,9 @@
         android:id="@+id/clPokemonDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         android:layout_weight="1"
+        android:background="@drawable/box"
         android:elevation="8dp">
 
         <androidx.constraintlayout.widget.Guideline
@@ -50,14 +52,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.76" />
+            app:layout_constraintGuide_percent="0.6" />
 
         <ImageView
             android:id="@+id/ivPokemon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/topround_box_background"
             android:elevation="2dp"
+            android:outlineProvider="none"
             android:padding="4dp"
             app:layout_constraintBottom_toTopOf="@id/PkDetailGuideLine2"
             app:layout_constraintEnd_toStartOf="@+id/PkDetailGuideLineVEnd"
@@ -69,10 +71,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:background="@drawable/bottom_background_box"
             android:elevation="2dp"
+            android:outlineProvider="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -81,9 +83,11 @@
 
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/bulbasaur"
                 android:textColor="#000000"
                 android:textSize="20sp"

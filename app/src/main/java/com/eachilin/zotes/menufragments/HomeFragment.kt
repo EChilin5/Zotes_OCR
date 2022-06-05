@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
 
@@ -57,6 +57,8 @@ class HomeFragment : Fragment() {
 
         rvBussiness.adapter = adapter
         rvBussiness.layoutManager = GridLayoutManager(context, 2)
+
+
         if(businessInfo.size == 0){
             fetchData()
         }
@@ -87,55 +89,17 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
 
-        val search : MenuItem? = menu?.findItem(R.id.nav_search)
-        val searchView : SearchView = search?.actionView as SearchView
-        searchView.queryHint = "Search Something"
-
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(text: String?): Boolean {
-                val temp = mutableListOf<BusinessSearchResultItem>()
-               if(text?.isNotEmpty() == true){
-                   for (item in businessInfo){
-                        if(item.title.contains(text)){
-                            temp.add(item)
-                        }
-                   }
-               }
-                if (text != null) {
-                    if(text.isEmpty()){
-                        rvBussiness.adapter = BusinessAdapter( businessInfo)
-                    }else{
-                        rvBussiness.adapter = BusinessAdapter( temp)
-
-                    }
-                }
-
-                return true
-            }
-
-        })
-
-
-        return super.onCreateOptionsMenu(menu, inflater)
-
-    }
 
     private fun fetchData() {
         businessInfo.clear()
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         var businessService = retrofit.create(BusinessService::class.java)
-            businessService.BusinessInfo("3")
+            businessService.BusinessInfo("20")
                 .enqueue(object : Callback<List<BusinessSearchResultItem>> {
                     override fun onResponse(
                         call: Call<List<BusinessSearchResultItem>>,
-                        response: Response<List<BusinessSearchResultItem>>
+                        response: Response<List<BusinessSearchResultItem>>,
                     ) {
                         Log.i(TAG, "onResponse $response")
                         var body = response.body()
@@ -149,7 +113,7 @@ class HomeFragment : Fragment() {
 
                     override fun onFailure(
                         call: Call<List<BusinessSearchResultItem>>,
-                        t: Throwable
+                        t: Throwable,
                     ) {
                         Log.i(TAG, "onFailure $t")
                     }
