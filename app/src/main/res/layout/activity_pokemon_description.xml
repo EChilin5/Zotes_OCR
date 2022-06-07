@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3CAE7E2"
-    tools:context=".PokemonDescription">
+    android:background="@color/default_background"
+    tools:context=".activity.PokemonDescription">
 
     <ImageView
         android:id="@+id/ivPokemonDesc"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#8ecae6"
+        android:background="@color/default_background"
         android:contentDescription="@string/pokemon_image"
         app:layout_constraintBottom_toTopOf="@+id/DescriptionGuideLine2"
         app:layout_constraintEnd_toEndOf="@id/DescriptionGuideLineV2"
@@ -21,13 +21,12 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/clProductTitle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#00afb9"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_700"
         android:elevation="30dp"
         android:outlineProvider="none"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@id/DescriptionGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
         app:layout_constraintTop_toBottomOf="@id/DescriptionGuideLine2">
@@ -37,27 +36,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="5dp"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="Pickachu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
         android:background="#F9FBFC"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/DescriptionGuideLine2.5"
         app:layout_constraintEnd_toStartOf="@+id/DescriptionGuideLineV2"
         app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
-        app:layout_constraintTop_toBottomOf="@id/DescriptionGuideLine3">
+        app:layout_constraintTop_toBottomOf="@+id/clProductTitle">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -84,33 +85,40 @@
 
     </LinearLayout>
 
+
+
+
     <android.widget.Button
         android:id="@+id/btnBuyNow"
-        android:layout_width="133dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/checkoutbutton"
+        android:layout_width="0dp"
+        android:layout_height="48sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_background_two"
+        android:padding="4sp"
         android:text="@string/buy_now"
-        android:textColor="#283593"
         app:layout_constraintBottom_toBottomOf="@id/DescriptionGuideLineEnd"
         app:layout_constraintEnd_toEndOf="@id/DescriptionGuideLineV2"
-        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5" />
 
     <android.widget.Button
         android:id="@+id/btnPokeAddToCart"
-        android:layout_width="141dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/checkoutbutton"
+        android:layout_width="0dp"
+        android:layout_height="48sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_background_one"
+        android:padding="4sp"
         android:text="@string/add_to_cart"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/DescriptionGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
-        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/DescriptionGuideLine2.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/DecriptionGuideLineV1"
@@ -179,6 +187,14 @@
         app:layout_constraintTop_toTopOf="@id/DescriptionGuideLine1"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

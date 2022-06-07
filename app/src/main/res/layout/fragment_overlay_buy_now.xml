@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="450dp"
     android:layout_gravity="bottom"
     android:background="@drawable/buynowbackground"
     android:padding="2dp"
@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_margin="5dp"
         android:background="#86BED8"
         android:contentDescription="@string/sample_buy_now_image"
@@ -26,11 +26,12 @@
     <TextView
         android:id="@+id/tvdfPokeName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:padding="2dp"
         android:text="@string/poke_name"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL2"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvdfCost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/OverlayBuyGLv2"
         app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL1" />
@@ -40,13 +41,13 @@
         android:id="@+id/tvdfCost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
         android:text="@string/cost_500"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/OverlayBuyGL3"
         app:layout_constraintEnd_toEndOf="@id/OverlayBuyGLvEnd"
-        app:layout_constraintStart_toStartOf="@+id/OverlayBuyGLv2"
-        app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL2" />
+        app:layout_constraintStart_toStartOf="@+id/OverlayBuyGLv2" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -110,16 +111,20 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btndfBuy"
-        android:layout_width="210dp"
+
+    <include
+        android:id="@+id/btnFinalBuy"
+        layout="@layout/buy_with_googlepay_button"
+        android:layout_width="0dp"
         android:layout_height="49dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:text="@string/buy_now"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toStartOf="@+id/OverlayBuyGLvEnd"
         app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/OverlayBuyGL6" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/OverlayBuyGLv1"

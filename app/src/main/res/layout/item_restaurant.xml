@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clProduct"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_weight="1"
         android:background="@drawable/box"
         android:elevation="8dp"
@@ -58,7 +58,9 @@
             android:id="@+id/ivProduct"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:elevation="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:elevation="4dp"
             android:outlineProvider="none"
             android:padding="4dp"
             app:layout_constraintBottom_toTopOf="@id/PkDetailGuideLine2"
@@ -69,47 +71,33 @@
             app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/tvProductName"
             android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="4dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/bulbasaur"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvProductCost"
+            app:layout_constraintEnd_toStartOf="@+id/PkDetailGuideLineVEnd"
+            app:layout_constraintStart_toStartOf="@+id/PkDetailGuideLineV1"
+            app:layout_constraintTop_toTopOf="@+id/PkDetailGuideLine2" />
+
+        <TextView
+            android:id="@+id/tvProductCost"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:elevation="2dp"
-            android:outlineProvider="none"
+            android:layout_marginBottom="4dp"
+            android:elevation="4dp"
+            android:text="@string/cost_500"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProduct">
-
-            <TextView
-                android:id="@+id/tvProductName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/bulbasaur"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvProductCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/cost_500"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toStartOf="@+id/PkDetailGuideLineVEnd"
+            app:layout_constraintStart_toStartOf="@+id/PkDetailGuideLineV1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

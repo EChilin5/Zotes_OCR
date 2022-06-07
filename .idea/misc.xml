@@ -8,6 +8,8 @@
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/background.xml" value="0.38333333333333336" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/bottom_background_box.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/box.xml" value="0.37743589743589745" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/btn_background_one.xml" value="0.33153153153153153" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/btn_background_two.xml" value="0.33153153153153153" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/buy_with_googlepay_button_content.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/buynowbackground.xml" value="0.3310810810810811" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/checkoutbutton.xml" value="0.39479166666666665" />
@@ -35,7 +37,7 @@
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/topround_box_background.xml" value="0.38333333333333336" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/drawable/white_box.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout-v28/activity_pokemon_description.xml" value="0.30344202898550726" />
-        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_checkout.xml" value="0.5" />
+        <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_checkout.xml" value="0.34281200631911535" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_login.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_main.xml" value="0.12" />
         <entry key="..\:/Users/edgar/AndroidStudioProjects/Zotes/app/src/main/res/layout/activity_pokemon_description.xml" value="0.4466666666666667" />

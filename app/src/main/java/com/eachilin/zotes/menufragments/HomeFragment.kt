@@ -21,8 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.eachilin.zotes.ItemOffsetDecoration
-
-
+import com.eachilin.zotes.api.Rating
 
 
 private const val TAG = "HomeFragment"
@@ -62,8 +61,8 @@ class HomeFragment : Fragment() {
 
         rvBussiness.adapter = adapter
         rvBussiness.layoutManager = GridLayoutManager(context, 2)
-//        val itemDecoration = ItemOffsetDecoration(context!!, R.dimen.item_offset)
-//        rvBussiness.addItemDecoration(itemDecoration);
+        val itemDecoration = ItemOffsetDecoration(context!!, R.dimen.item_offset)
+        rvBussiness.addItemDecoration(itemDecoration);
 
         if(businessInfo.size == 0){
             fetchData()
@@ -99,54 +98,38 @@ class HomeFragment : Fragment() {
 
     private fun fetchData() {
         businessInfo.clear()
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        var businessService = retrofit.create(BusinessService::class.java)
-        service = businessService.BusinessInfo("20")
-                .enqueue(object : Callback<List<BusinessSearchResultItem>> {
-                    override fun onResponse(
-                        call: Call<List<BusinessSearchResultItem>>,
-                        response: Response<List<BusinessSearchResultItem>>,
-                    ) {
-                        Log.i(TAG, "onResponse $response")
-                        var body = response.body()
-                        if(body == null){
-                            Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
-                            return
-                         }
-                        businessInfo.addAll(body)
-                        adapter.notifyDataSetChanged()
-                    }
-
-                    override fun onFailure(
-                        call: Call<List<BusinessSearchResultItem>>,
-                        t: Throwable,
-                    ) {
-                        Log.i(TAG, "onFailure $t")
-                    }
-
-                })
-
-//        val businessService = retrofit.create(BusinessService::class.java)
-//        businessService.BusinessInfo("5")
-//            .enqueue(object : Callback<BusinessSearchResult> {
-//                override fun onResponse(call: Call<BusinessSearchResult>, response: Response<BusinessSearchResult>) {
-//                    Log.i(TAG, "onResponse $response")
-//                    val body = response.body()
-//                    if(body == null){
-//                        Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
-//                        return
+//        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+//        var businessService = retrofit.create(BusinessService::class.java)
+//        service = businessService.BusinessInfo("20")
+//                .enqueue(object : Callback<List<BusinessSearchResultItem>> {
+//                    override fun onResponse(
+//                        call: Call<List<BusinessSearchResultItem>>,
+//                        response: Response<List<BusinessSearchResultItem>>,
+//                    ) {
+//                        Log.i(TAG, "onResponse $response")
+//                        var body = response.body()
+//                        if(body == null){
+//                            Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
+//                            return
+//                         }
+//                        businessInfo.addAll(body)
+//                        adapter.notifyDataSetChanged()
 //                    }
 //
-//                    Log.e(TAG, "${body.products}")
-//                    businessInfo.addAll(body.products)
-//                    adapter?.notifyDataSetChanged()
-//                }
+//                    override fun onFailure(
+//                        call: Call<List<BusinessSearchResultItem>>,
+//                        t: Throwable,
+//                    ) {
+//                        Log.i(TAG, "onFailure $t")
+//                    }
 //
-//                override fun onFailure(call: Call<BusinessSearchResult>, t: Throwable) {
-//                    Log.e(TAG, "onFailure $t")
-//                }
-//
-//            })
+//                })
+            var desc = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+            var image = "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1566927496-button-down-4-1566927485.jpg"
+            var rating = Rating(432,3.4)
+            var tempItem = BusinessSearchResultItem("Mens Clothing", "Just a million dollar moon  $desc", 23, image, 100.32, rating, "Uchiha mantle" )
+        businessInfo.add(tempItem)
+        adapter.notifyDataSetChanged()
 
     }
 

@@ -87,7 +87,7 @@ class PokemonDescription : AppCompatActivity() {
 
         val cost = "$ ${product.price}"
         btnAddToCart.setOnClickListener { addPokemon(id, name, image) }
-        btnBuyNos.setOnClickListener { openCheckout(image, name, cost) }
+        btnBuyNos.setOnClickListener { openCheckout(image, name, product.price.toString()) }
 
 
         val tabLayout = binding.tabLayout
@@ -106,13 +106,13 @@ class PokemonDescription : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager2){ tab, position->
             when(position){
                 0->{
-                    tab.text="Abilities"
+                    tab.text="General"
                 }
                 1->{
-                    tab.text="Details"
+                    tab.text="Description"
                 }
                 2->{
-                    tab.text="Shopping"
+                    tab.text="Reviews"
                 }
 
         }

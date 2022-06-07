@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,7 @@ private const val TAG = "Checkout"
 class Checkout : AppCompatActivity() {
 
 
+    private lateinit var btnBuy: RelativeLayout
     private lateinit var cartListener: ListenerRegistration
     private var count by Delegates.notNull<Double>()
     private lateinit var binding : ActivityCheckoutBinding
@@ -74,6 +76,8 @@ class Checkout : AppCompatActivity() {
         firestoreDB = FirebaseFirestore.getInstance()
         sqlCartHelper = CartHelper(this)
 
+         btnBuy = binding.btncBuy.root
+
         rvCheckout = binding.rvCheck
         rvCheckout.adapter = adapter
         rvCheckout.layoutManager = LinearLayoutManager(this)
@@ -87,7 +91,7 @@ class Checkout : AppCompatActivity() {
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
 
-        binding.btncBuyNow.root.setOnClickListener {
+        btnBuy.setOnClickListener {
             completeOrder()
             requestPayment()
         }
@@ -122,7 +126,7 @@ class Checkout : AppCompatActivity() {
 
     private fun setGooglePayAvailable(available: Boolean) {
         if (available) {
-            binding.btncBuyNow.root.visibility = View.VISIBLE
+            btnBuy.visibility = View.VISIBLE
         } else {
             Toast.makeText(
                 this,
@@ -134,7 +138,7 @@ class Checkout : AppCompatActivity() {
     private fun requestPayment() {
 
         // Disables the button to prevent multiple clicks.
-        binding.btncBuyNow.root.isClickable = false
+        btnBuy.isClickable = false
 
         // The price provided to the API should include taxes and shipping.
         // This price is not displayed to the user.
@@ -181,7 +185,7 @@ class Checkout : AppCompatActivity() {
                 }
 
                 // Re-enables the Google Pay payment button.
-                binding.btncBuyNow.root.isClickable = true
+                btnBuy.isClickable = true
             }
         }
     }

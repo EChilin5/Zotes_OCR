@@ -13,6 +13,8 @@ import com.eachilin.zotes.databinding.PokeShoppingBinding
 import com.eachilin.zotes.menufragments.CartFragment
 import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 private const val TAG = "PokeCartAdapter"
 class PokeCartAdapter(
@@ -87,6 +89,7 @@ class PokeCartAdapter(
                 Log.e(TAG, "added")
                 var array = updateItemCount(product.price, product.count, true,)
                 var newCount = array[0].toInt()
+
                 var newPrice = array[1]
                 onIncrementPrice(position, newPrice, newCount, product.id.toString() )
                 Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
@@ -117,7 +120,9 @@ class PokeCartAdapter(
             var price = price.times(amount)
 
             itemValue[0] = amount.toDouble()
-            itemValue[1] = price
+            val finalcount = BigDecimal(price).setScale(2, RoundingMode.HALF_EVEN)
+
+            itemValue[1] = finalcount.toDouble()
 
             return itemValue
 

@@ -29,7 +29,12 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
             var imageLink = item.image
 
             tvPrice.text = "$ ${item.price}"
-            tvName.text = item.title
+            var title = item.title
+
+            title = getTitle(title)
+
+
+            tvName.text = title
 
             Glide.with(itemView.context)
                 .load(imageLink)
@@ -42,6 +47,25 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
                 intent.putExtra("businessProduct", item)
                 itemView.context.startActivity(intent)
             }
+
+        }
+
+        private fun getTitle(title: String):String {
+            var seperate = " "
+            val strList = title.split(seperate)
+            var word = ""
+            var count = 0;
+            for(item in strList){
+                word += "$item "
+                count++
+                if(count == 5){
+                    word = word.trim() + "..."
+                    break
+                }
+
+
+            }
+            return word
 
         }
     }
