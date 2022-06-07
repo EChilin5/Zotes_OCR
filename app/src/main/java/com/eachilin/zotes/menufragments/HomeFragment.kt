@@ -20,11 +20,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.eachilin.zotes.ItemOffsetDecoration
+
+
+
 
 private const val TAG = "HomeFragment"
 private const val BASE_URL = "https://fakestoreapi.com/"
 class HomeFragment : Fragment() {
 
+    private lateinit var service: Unit
     private var _binding : FragmentHomeBinding? = null
     private val  binding get() = _binding!!
 
@@ -57,7 +62,8 @@ class HomeFragment : Fragment() {
 
         rvBussiness.adapter = adapter
         rvBussiness.layoutManager = GridLayoutManager(context, 2)
-
+//        val itemDecoration = ItemOffsetDecoration(context!!, R.dimen.item_offset)
+//        rvBussiness.addItemDecoration(itemDecoration);
 
         if(businessInfo.size == 0){
             fetchData()
@@ -95,7 +101,7 @@ class HomeFragment : Fragment() {
         businessInfo.clear()
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         var businessService = retrofit.create(BusinessService::class.java)
-            businessService.BusinessInfo("20")
+        service = businessService.BusinessInfo("20")
                 .enqueue(object : Callback<List<BusinessSearchResultItem>> {
                     override fun onResponse(
                         call: Call<List<BusinessSearchResultItem>>,
@@ -141,6 +147,11 @@ class HomeFragment : Fragment() {
 //                }
 //
 //            })
+
+    }
+
+    override fun onStop() {
+        super.onStop()
 
     }
 

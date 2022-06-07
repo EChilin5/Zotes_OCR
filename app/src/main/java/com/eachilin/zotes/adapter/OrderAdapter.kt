@@ -26,6 +26,15 @@ class OrderAdapter(private var orderInfo: MutableList<OrderModal>) : RecyclerVie
         return orderInfo.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
 
 
     class OrderViewHolder(itemView : ItemOrderBinding): RecyclerView.ViewHolder(itemView.root) {

@@ -14,13 +14,13 @@
     <!-- A CardView that contains a TextView -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clPokemonDetail"
+        android:id="@+id/clProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:background="@drawable/box"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        android:outlineProvider="none">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/PkDetailGuideLineV1"
@@ -55,7 +55,7 @@
             app:layout_constraintGuide_percent="0.6" />
 
         <ImageView
-            android:id="@+id/ivPokemon"
+            android:id="@+id/ivProduct"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:elevation="2dp"
@@ -79,15 +79,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivPokemon">
+            app:layout_constraintTop_toBottomOf="@+id/ivProduct">
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvProductName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/bulbasaur"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -96,7 +97,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvHPokeCost"
+                android:id="@+id/tvProductCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -107,7 +108,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

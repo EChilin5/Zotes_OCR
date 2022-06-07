@@ -32,6 +32,14 @@ class OrderItemDetailAdapter(private var item: List<OrderItemsModal>, private va
         return item.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
 
 
     class ItemViewHolder(itemView : ItemOrderAdditionalInforBinding) : RecyclerView.ViewHolder(itemView.root){

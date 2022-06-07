@@ -29,6 +29,15 @@ class ReviewAdapter (private val reviewPost: MutableList<ReviewModal>) : Recycle
         return reviewPost.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     inner class ReviewPostViewHolder(itemView: ItemReviewsBinding) : RecyclerView.ViewHolder(itemView.root) {
         fun bind(post: ReviewModal, binding: ItemReviewsBinding?, position: Int, ListLength: Int) {
             var tvName = binding?.tvReviewName

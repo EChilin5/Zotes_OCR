@@ -153,4 +153,15 @@ class PokeCartAdapter(
     override fun getItemCount(): Int {
         return productInfo.size
     }
+
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
 }

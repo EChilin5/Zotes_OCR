@@ -41,6 +41,15 @@ class CheckoutAdapter(private val productInfo:MutableList<CartItemModal>): Recyc
        return productInfo.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     class CartViewHolder(itemView: ItemCheckoutBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: CartItemModal) {

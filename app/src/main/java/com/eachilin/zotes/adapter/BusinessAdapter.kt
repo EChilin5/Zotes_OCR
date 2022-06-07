@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.eachilin.zotes.R
 import com.eachilin.zotes.activity.PokemonDescription
-import com.eachilin.zotes.api.BusinessSearchResult
 import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.databinding.ItemRestaurantBinding
-import com.eachilin.zotes.pokemon.PokemonInitialData
 
 class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResultItem>) : RecyclerView.Adapter<BusinessAdapter.PokemonViewHolder>() {
 
@@ -23,11 +21,11 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
 
     class PokemonViewHolder(itemView: ItemRestaurantBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: BusinessSearchResultItem) {
-            var tvName: TextView =   itemView.findViewById(R.id.tvName)
-            var ivPokemon: ImageView = itemView.findViewById(R.id.ivPokemon)
-            var clPokemonDelail = itemView.findViewById<ConstraintLayout>(R.id.clPokemonDetail)
-            var tvPrice = itemView.findViewById<TextView>(R.id.tvHPokeCost)
+        fun bind(item: BusinessSearchResultItem, binding: ItemRestaurantBinding) {
+            var tvName: TextView =   binding.tvProductName
+            var ivPokemon: ImageView = binding.ivProduct
+            var clPokemonDelail = binding.clProduct
+            var tvPrice = binding.tvProductCost
             var imageLink = item.image
 
             tvPrice.text = "$ ${item.price}"
@@ -36,6 +34,7 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
             Glide.with(itemView.context)
                 .load(imageLink)
 //                .override(, 100)
+                .centerInside()
                 .into(ivPokemon)
 
             clPokemonDelail.setOnClickListener {
@@ -55,11 +54,19 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val businessItem = businessInfo[position]
-        holder.bind(businessItem)
+        holder.bind(businessItem, binding)
     }
 
     override fun getItemCount(): Int {
         return businessInfo.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 
