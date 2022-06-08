@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val orderCartSize = firestore.collection("zotesOrderCart").whereEqualTo("user.username", emailInfo).get()
         orderCartSize.addOnCompleteListener {
             it.addOnCompleteListener {
-               // it.result.size()
+                // it.result.size()
                 val cartBadge = binding.bottomNav.getOrCreateBadge(R.id.ic_cart)
                 cartBadge.isVisible = true
                 cartBadge.number = it.result.size()

@@ -42,7 +42,7 @@ class CartFragment : Fragment(), PokeId {
     private lateinit var tvFinalPrice : TextView
     private lateinit var sqlCartHelper: CartHelper
     private var cartNewItems = ArrayList<CartItemModal>()
-    private var count: Double = 0.0
+    private var overallPrice: Double = 0.0
     private val adapter = PokeCartAdapter(cartNewItems, ::onItemDeleteClick, ::onIncrementPrice, ::onDecrementPrice)
     private lateinit var rvShopping :RecyclerView
     private lateinit var firestore: FirebaseFirestore
@@ -56,19 +56,18 @@ class CartFragment : Fragment(), PokeId {
                 adapter.notifyDataSetChanged()
             }
         }
-//        sqlCartHelper.deleteStudentById(poke.id.t)
-        //fetchData()
         countTotalVal()
     }
 
     fun onIncrementPrice(postId: Int, increasePrice: Double, countUpdate :Int, docId: String){
-        count += increasePrice
+        Log.e(TAG, increasePrice.toString())
+        overallPrice = increasePrice
         updateInformation(postId, countUpdate, docId)
         updateBadge(true)
     }
 
     fun onDecrementPrice(postId: Int, increasePrice: Double, countUpdate :Int, docId:String){
-        count -= increasePrice
+        overallPrice = increasePrice
         updateInformation(postId, countUpdate, docId)
         updateBadge(false)
     }
@@ -77,7 +76,7 @@ class CartFragment : Fragment(), PokeId {
         cartListener.remove()
         updateFirebaseItemCount(docId, countUpdate)
         cartNewItems[postId].count = countUpdate
-        tvFinalPrice.text = count.toString()
+        tvFinalPrice.text = overallPrice.toString()
     }
 
     private fun updateFirebaseItemCount(id: String,  updateCount: Int, ){
@@ -193,16 +192,16 @@ class CartFragment : Fragment(), PokeId {
     @SuppressLint("SetTextI18n")
     private fun countTotalVal(){
         if(cartNewItems.isEmpty()){
-            count =0.0
+            overallPrice =0.0
         }else{
-            count = 0.0
+            overallPrice = 0.0
             for(item in cartNewItems){
-                count += item.price
+                overallPrice += item.price.times(item.count)
             }
         }
-        val finalcount = BigDecimal(count).setScale(2, RoundingMode.HALF_EVEN)
-        count = finalcount.toDouble()
-        tvFinalPrice.text = "$ $count"
+        val finalcount = BigDecimal(overallPrice).setScale(2, RoundingMode.HALF_EVEN)
+        overallPrice = finalcount.toDouble()
+        tvFinalPrice.text = "$ $overallPrice"
     }
 
 
