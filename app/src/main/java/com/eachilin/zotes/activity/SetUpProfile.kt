@@ -7,14 +7,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.eachilin.zotes.activity.MainActivity
 import com.eachilin.zotes.databinding.ActivitySetUpProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
 private const val TAG = "SetUpProfile"
 class SetUpProfile : AppCompatActivity() {
     private lateinit var binding:ActivitySetUpProfileBinding
-    private lateinit var etName : EditText
     private lateinit var etEmail : EditText
     private lateinit var etPassword : EditText
     private lateinit var etConfirmPassword : EditText
@@ -37,9 +35,9 @@ class SetUpProfile : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
 
-            var email = etEmail.text.toString().trim()
-            var password = etPassword.text.toString().trim()
-            var confirm = etConfirmPassword.text.toString().trim()
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+            val confirm = etConfirmPassword.text.toString().trim()
 
             if (email.isEmpty() || confirm.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Missing Infromation", Toast.LENGTH_LONG).show()
@@ -97,10 +95,10 @@ class SetUpProfile : AppCompatActivity() {
     }
 
     private fun  checkForValidEmail(email:String,password: String) :Boolean{
-        var isValidUser: Boolean = false
+        val isValidUser = false
         val auth = FirebaseAuth.getInstance()
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task->
-            var isNewUser:Boolean = task.result.signInMethods?.isEmpty() == true;
+            val isNewUser:Boolean = task.result.signInMethods?.isEmpty() == true
 
             if(isNewUser){
                 createUserAccount(email,password)

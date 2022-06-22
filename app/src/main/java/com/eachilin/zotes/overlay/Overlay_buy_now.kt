@@ -1,5 +1,6 @@
 package com.eachilin.zotes.overlay
 
+import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
@@ -58,7 +59,7 @@ class overlay_buy_now : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentOverlayBuyNowBinding.inflate(inflater, container, false)
@@ -72,10 +73,10 @@ class overlay_buy_now : DialogFragment() {
         val name = requireArguments().getString("name")
         cost = requireArguments().getString("cost")!!
 
-        var tvName = binding.tvdfPokeName
-        var tvCost = binding.tvdfCost
+        val tvName = binding.tvdfPokeName
+        val tvCost = binding.tvdfCost
         btnBuy = binding.btnFinalBuy.root
-        var ivDisply = binding.imageView3
+        val ivDisplay = binding.imageView3
 
         tvName.text = getTitle(name)
         tvCost.text = cost
@@ -95,28 +96,29 @@ class overlay_buy_now : DialogFragment() {
             .load(imageLink)
             .centerInside()
 //                .override(, 100)
-            .into(ivDisply)
+            .into(ivDisplay)
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun completeOrder(name:String, count : Int, imageLink:String, cost:Double){
         val email =getEmail()
-        var firestoreDB = FirebaseFirestore.getInstance()
+        val firestoreDB = FirebaseFirestore.getInstance()
 //
 //            var count = orderInformation.count
 //            var imageLink = orderInformation.image
 //
 //            var cost = orderInformation.count.times(orderInformation.price)
 
-            var newOrderItem = OrderItemsModal(name, imageLink,
-                cost?.toLong(), count)
+        val newOrderItem = OrderItemsModal(name, imageLink,
+            cost.toLong(), count)
         orderItems.add(newOrderItem)
 
 
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = sdf.format(Date())
-        var newOrder = OrderModal("", currentDate,  cost.toDouble(), email, orderItems  )
+        val newOrder = OrderModal("", currentDate, cost, email, orderItems  )
         firestoreDB.collection("zotesCompletedOrder").add(newOrder)
             .addOnCompleteListener { newZotesOrder->
                 if(newZotesOrder.isSuccessful){
@@ -135,10 +137,10 @@ class overlay_buy_now : DialogFragment() {
     }
 
     private fun getTitle(title: String?):String {
-        var seperate = " "
-        val strList = title?.split(seperate)
+        val separate = " "
+        val strList = title?.split(separate)
         var word = ""
-        var count = 0;
+        var count = 0
         for(item in strList!!){
             word += "$item "
             count++
@@ -156,7 +158,7 @@ class overlay_buy_now : DialogFragment() {
     private fun possiblyShowGooglePayButton() {
 
         val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
-        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
+        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString())
 
         // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
         // OnCompleteListener to be triggered when the result of the call is known.
@@ -178,7 +180,7 @@ class overlay_buy_now : DialogFragment() {
             Toast.makeText(
                 context,
                 "Unfortunately, Google Pay is not available on this device",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show()
         }
     }
 
@@ -210,7 +212,7 @@ class overlay_buy_now : DialogFragment() {
 
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             // Value passed in AutoResolveHelper
@@ -239,7 +241,7 @@ class overlay_buy_now : DialogFragment() {
     }
 
     private fun handlePaymentSuccess(paymentData: PaymentData) {
-        val paymentInformation = paymentData.toJson() ?: return
+        val paymentInformation = paymentData.toJson()
 
         try {
             // Token will be null if PaymentDataRequest was not constructed using fromJson(String).
@@ -269,32 +271,14 @@ class overlay_buy_now : DialogFragment() {
     }
 
       private fun goToMain() {
-          var intent = Intent(context, MainActivity::class.java)
+          val intent = Intent(context, MainActivity::class.java)
           context?.startActivity(intent)
     }
 
     private fun getEmail():String{
-        val userName = Firebase.auth.currentUser
-        var currentUserName = userName?.email
-        return currentUserName.toString()
+        val userName = Firebase.auth.currentUser?.email
+        return userName.toString()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment overlay_buy_now.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            overlay_buy_now().apply {
-                arguments = Bundle().apply {
 
-                }
-            }
-    }
 }

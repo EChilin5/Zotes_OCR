@@ -4,24 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.SearchView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eachilin.zotes.R
 import com.eachilin.zotes.adapter.BusinessAdapter
-import com.eachilin.zotes.api.BusinessSearchResult
 import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.api.BusinessService
 import com.eachilin.zotes.databinding.FragmentHomeBinding
-import com.eachilin.zotes.pokemon.PokemonInitialData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.eachilin.zotes.ItemOffsetDecoration
-import com.eachilin.zotes.api.Rating
 
 
 private const val TAG = "HomeFragment"
@@ -37,15 +33,12 @@ class HomeFragment : Fragment() {
     private  lateinit var  rvBussiness : RecyclerView
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -62,7 +55,7 @@ class HomeFragment : Fragment() {
         rvBussiness.adapter = adapter
         rvBussiness.layoutManager = GridLayoutManager(context, 2)
         val itemDecoration = ItemOffsetDecoration(context!!, R.dimen.item_offset)
-        rvBussiness.addItemDecoration(itemDecoration);
+        rvBussiness.addItemDecoration(itemDecoration)
 
         if(businessInfo.size == 0){
             fetchData()
@@ -72,21 +65,20 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
 
         binding.etSearchDetails.doAfterTextChanged { task ->
-            var text= task
 
             val temp = mutableListOf<BusinessSearchResultItem>()
-            if(text?.isNotEmpty() == true){
+            if(task?.isNotEmpty() == true){
                 for (item in businessInfo){
-                    if(item.title.contains(text)){
+                    if(item.title.contains(task)){
                         temp.add(item)
                     }
                 }
             }
-            if (text != null) {
-                if(text.isEmpty()){
-                    rvBussiness.adapter = BusinessAdapter( businessInfo)
-                }else{
-                    rvBussiness.adapter = BusinessAdapter( temp)
+            if (task != null) {
+                if (task.isEmpty()) {
+                    rvBussiness.adapter = BusinessAdapter(businessInfo)
+                } else {
+                    rvBussiness.adapter = BusinessAdapter(temp)
 
                 }
             }
@@ -98,38 +90,38 @@ class HomeFragment : Fragment() {
 
     private fun fetchData() {
         businessInfo.clear()
-//        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-//        var businessService = retrofit.create(BusinessService::class.java)
-//        service = businessService.BusinessInfo("20")
-//                .enqueue(object : Callback<List<BusinessSearchResultItem>> {
-//                    override fun onResponse(
-//                        call: Call<List<BusinessSearchResultItem>>,
-//                        response: Response<List<BusinessSearchResultItem>>,
-//                    ) {
-//                        Log.i(TAG, "onResponse $response")
-//                        var body = response.body()
-//                        if(body == null){
-//                            Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
-//                            return
-//                         }
-//                        businessInfo.addAll(body)
-//                        adapter.notifyDataSetChanged()
-//                    }
-//
-//                    override fun onFailure(
-//                        call: Call<List<BusinessSearchResultItem>>,
-//                        t: Throwable,
-//                    ) {
-//                        Log.i(TAG, "onFailure $t")
-//                    }
-//
-//                })
-            var desc = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-            var image = "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1566927496-button-down-4-1566927485.jpg"
-            var rating = Rating(432,3.4)
-            var tempItem = BusinessSearchResultItem("Mens Clothing", "Just a million dollar moon  $desc", 23, image, 100.32, rating, "Uchiha mantle" )
-        businessInfo.add(tempItem)
-        adapter.notifyDataSetChanged()
+        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        val businessService = retrofit.create(BusinessService::class.java)
+        service = businessService.businessInfo("20")
+                .enqueue(object : Callback<List<BusinessSearchResultItem>> {
+                    override fun onResponse(
+                        call: Call<List<BusinessSearchResultItem>>,
+                        response: Response<List<BusinessSearchResultItem>>,
+                    ) {
+                        Log.i(TAG, "onResponse $response")
+                        val body = response.body()
+                        if(body == null){
+                            Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
+                            return
+                         }
+                        businessInfo.addAll(body)
+                        adapter.notifyDataSetChanged()
+                    }
+
+                    override fun onFailure(
+                        call: Call<List<BusinessSearchResultItem>>,
+                        t: Throwable,
+                    ) {
+                        Log.i(TAG, "onFailure $t")
+                    }
+
+                })
+//            var desc = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+//            var image = "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1566927496-button-down-4-1566927485.jpg"
+//            var rating = Rating(432,3.4)
+//            var tempItem = BusinessSearchResultItem("Mens Clothing", "Just a million dollar moon  $desc", 23, image, 100.32, rating, "Uchiha mantle" )
+//        businessInfo.add(tempItem)
+//        adapter.notifyDataSetChanged()
 
     }
 

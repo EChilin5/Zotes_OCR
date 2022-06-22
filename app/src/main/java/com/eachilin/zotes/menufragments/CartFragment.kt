@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
-import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,6 @@ import com.eachilin.zotes.adapter.PokeCartAdapter
 import com.eachilin.zotes.databinding.FragmentCartBinding
 import com.eachilin.zotes.modal.CartItemModal
 import com.eachilin.zotes.modal.CartModal
-import com.eachilin.zotes.modal.OrderModal
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
@@ -32,7 +29,6 @@ import java.math.RoundingMode
 
 
 private const val TAG = "CartFragment"
-private const val BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 class CartFragment : Fragment(), PokeId {
     private lateinit var cartListener: ListenerRegistration
@@ -48,7 +44,7 @@ class CartFragment : Fragment(), PokeId {
     private lateinit var firestore: FirebaseFirestore
 
     fun onItemDeleteClick(item:CartItemModal){
-        Log.e(TAG, "selecte ${item.id}")
+        Log.e(TAG, "selected ${item.id}")
         firestore.collection("zotesOrderCart").document(item.id.toString()).delete().addOnCompleteListener {
             if(it.isSuccessful){
                 Log.e(TAG, "deleted")
@@ -79,8 +75,8 @@ class CartFragment : Fragment(), PokeId {
         tvFinalPrice.text = overallPrice.toString()
     }
 
-    private fun updateFirebaseItemCount(id: String,  updateCount: Int, ){
-        Log.e(TAG, "update count from cart ${updateCount}")
+    private fun updateFirebaseItemCount(id: String,  updateCount: Int ){
+        Log.e(TAG, "update count from cart $updateCount")
         firestore.collection("zotesOrderCart").document(id).update("count", updateCount).addOnCompleteListener {
             if(it.isSuccessful){
                 Log.e(TAG, " updated")
@@ -102,21 +98,12 @@ class CartFragment : Fragment(), PokeId {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        adapter.setOnClickItem { Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show() }
-        adapter.setOnClickDeleteItem {Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show()  }
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        Toast.makeText(context, "call back ", Toast.LENGTH_SHORT).show()
-        adapter.setOnClickItem { Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show() }
-        adapter.setOnClickDeleteItem {Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show()  }
 
         // Inflate the layout for this fragment
         _binding = FragmentCartBinding.inflate(inflater, container, false)
@@ -136,9 +123,6 @@ class CartFragment : Fragment(), PokeId {
 
         rvShopping.adapter = adapter
         rvShopping.layoutManager = LinearLayoutManager(context)
-
-        adapter.setOnClickItem { Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show() }
-        adapter.setOnClickDeleteItem {Toast.makeText(context, "call back ${it.name}", Toast.LENGTH_SHORT).show()  }
 
         setHasOptionsMenu(true)
 
@@ -161,7 +145,6 @@ class CartFragment : Fragment(), PokeId {
 //        pokemonInfo.addAll(pokeList)
 //        adapter.notifyDataSetChanged()
         val email = getEmail()
-        Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
        val cartQuery =  firestore.collection("zotesOrderCart").whereEqualTo("user.username", email)
        cartListener =  cartQuery.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
@@ -169,7 +152,7 @@ class CartFragment : Fragment(), PokeId {
                 return@addSnapshotListener
             }
            cartNewItems.clear()
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
@@ -183,10 +166,9 @@ class CartFragment : Fragment(), PokeId {
     }
 
     private fun getEmail(): String? {
-        val userName = Firebase.auth.currentUser
-        var currentUserName = userName?.email
+        val userName = Firebase.auth.currentUser?.email
 
-        return currentUserName
+        return userName
     }
 
     @SuppressLint("SetTextI18n")

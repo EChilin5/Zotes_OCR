@@ -22,8 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 
 private const val TAG:String="PokemonDescription"
@@ -36,10 +35,6 @@ class PokemonDescription : AppCompatActivity() {
     private lateinit var firestore :FirebaseFirestore
     private lateinit var product : BusinessSearchResultItem
 
-    override fun onStart() {
-        super.onStart()
-
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
@@ -48,27 +43,20 @@ class PokemonDescription : AppCompatActivity() {
         binding = ActivityPokemonDescriptionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firestore = FirebaseFirestore.getInstance()
-        var name:String = ""
-        var image:String = ""
-        var id:String = ""
         sqlCartHelper = CartHelper(this)
 
         product = intent.getSerializableExtra("businessProduct") as BusinessSearchResultItem
-
-             name = product.title
-
+        val id  = product.id.toString()
+        val name: String = product.title
+        val image : String = product.image
             //The key argument here must match that used in the other activity
             binding.tvPokemonName.text = name
 
-            image = product.image
             Glide.with(this)
                 .load(image)
                 .into(binding.ivPokemonDesc)
 
-
-
-
-        var email = getEmail()
+        val email = getEmail()
         threadCouritineCheckItem(name, email)
 
         val btnAddToCart = binding.btnPokeAddToCart
@@ -78,15 +66,13 @@ class PokemonDescription : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
 
-            var intent =Intent(this, MainActivity::class.java)
+            val intent =Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        //Toast.makeText(this, "$pokemonExistInCart", Toast.LENGTH_SHORT).show()
 
-        val cost = "$ ${product.price}"
-        btnAddToCart.setOnClickListener { addPokemon(id, name, image) }
+        btnAddToCart.setOnClickListener { addOrder(id, name, image) }
         btnBuyNos.setOnClickListener { openCheckout(image, name, product.price.toString()) }
 
 
@@ -152,19 +138,11 @@ class PokemonDescription : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun addPokemon(id: String, name: String, image: String) {
-        val current = LocalDateTime.now()
-
-        val formatter = DateTimeFormatter.BASIC_ISO_DATE
-//        val formatted = current.format(formatter)
-//
-//        val pokeListSize = sqlCartHelper.getAllPokemon()
-
-
+    private fun addOrder(id: String, name: String, image: String) {
         val user = UserModal("", getEmail())
 
             val cartItem = CartItemModal("", name = name, itemId = product.id.toString(), count = 1, price= product.price, product.image, user )
-        firestore.collection("zotesOrderCart").add(cartItem).addOnCompleteListener { it->
+        firestore.collection("zotesOrderCart").add(cartItem).addOnCompleteListener {
             if(it.isSuccessful){
                 Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show()
 

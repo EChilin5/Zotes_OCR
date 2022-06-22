@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.eachilin.zotes.R
 import com.eachilin.zotes.activity.PokemonDescription
 import com.eachilin.zotes.api.BusinessSearchResultItem
 import com.eachilin.zotes.databinding.ItemRestaurantBinding
@@ -22,11 +20,11 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
     class PokemonViewHolder(itemView: ItemRestaurantBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: BusinessSearchResultItem, binding: ItemRestaurantBinding) {
-            var tvName: TextView =   binding.tvProductName
-            var ivPokemon: ImageView = binding.ivProduct
-            var clPokemonDelail = binding.clProduct
-            var tvPrice = binding.tvProductCost
-            var imageLink = item.image
+            val tvName: TextView =   binding.tvProductName
+            val ivPokemon: ImageView = binding.ivProduct
+            val clPokemonDetail = binding.clProduct
+            val tvPrice = binding.tvProductCost
+            val imageLink = item.image
 
             tvPrice.text = "$ ${item.price}"
             var title = item.title
@@ -42,7 +40,7 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
                 .centerInside()
                 .into(ivPokemon)
 
-            clPokemonDelail.setOnClickListener {
+            clPokemonDetail.setOnClickListener {
                 val intent = Intent(itemView.context, PokemonDescription::class.java)
                 intent.putExtra("businessProduct", item)
                 itemView.context.startActivity(intent)
@@ -51,10 +49,10 @@ class BusinessAdapter(private val businessInfo: MutableList<BusinessSearchResult
         }
 
         private fun getTitle(title: String):String {
-            var seperate = " "
-            val strList = title.split(seperate)
+            val separate = " "
+            val strList = title.split(separate)
             var word = ""
-            var count = 0;
+            var count = 0
             for(item in strList){
                 word += "$item "
                 count++

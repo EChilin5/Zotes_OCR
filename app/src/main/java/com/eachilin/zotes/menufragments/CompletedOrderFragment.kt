@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eachilin.zotes.adapter.OrderAdapter
 import com.eachilin.zotes.databinding.FragmentCompletedOrderBinding
-import com.eachilin.zotes.modal.OrderItemsModal
 import com.eachilin.zotes.modal.OrderModal
-import com.eachilin.zotes.modal.ReviewModal
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,7 +37,7 @@ class CompletedOrderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCompletedOrderBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,14 +51,14 @@ class CompletedOrderFragment : Fragment() {
 
     private fun fetchData() {
         val email = getEmail()
-        var orderCartReference = firestore.collection("zotesCompletedOrder").whereEqualTo("userOrderName", getEmail())
+        val orderCartReference = firestore.collection("zotesCompletedOrder").whereEqualTo("userOrderName", email)
         orderCartReference.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
             orderInfo.clear()
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: OrderModal = dc.document.toObject(OrderModal::class.java)

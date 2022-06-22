@@ -27,7 +27,6 @@ class PokeCartAdapter(
     private var _binding: PokeShoppingBinding?=null
     private val binding get() = _binding!!
 
-    private lateinit  var sqlCartHelper: CartFragment
 
     private var onClickItem: ((CartModal)-> Unit)? = null
     private var onClickDeleteItem: ((CartModal) -> Unit)? = null
@@ -50,31 +49,31 @@ class PokeCartAdapter(
             binding: PokeShoppingBinding
         ) {
 
-            var tvPokemonName : TextView = binding.tvPokeNameCart
-            var tvCost : TextView = binding.tvCost
-            var pokeImg: ImageView = binding.ivOrderPokemon
-            var tvRemove:ImageView = binding.ivRemove
-            var tvAmount:TextView = binding.tvAmount
-            var tvAdd:ImageView = binding.ivAdd
+            val tvPokemonName : TextView = binding.tvPokeNameCart
+            val tvCost : TextView = binding.tvCost
+            val pokeImg: ImageView = binding.ivOrderPokemon
+            val tvRemove:ImageView = binding.ivRemove
+            val tvAmount:TextView = binding.tvAmount
+            val tvAdd:ImageView = binding.ivAdd
 
             tvAmount.text = product.count.toString()
 
             // imageView
-            var imageLink = product.image
+            val imageLink = product.image
             //
            // first load
             tvPokemonName.text = product.name
             // price
-            var price = product.price.times(product.count)
+            val price = product.price.times(product.count)
             tvCost.text = "$ $price"
 
             // remove
             tvRemove.setOnClickListener{
                 if(product.count != 1){
                     Log.e(TAG, "removed")
-                    var array = updateItemCount(product.price, product.count, false)
-                    var newCount = array[0].toInt()
-                    var newPrice = array[1]
+                    val array = updateItemCount(product.price, product.count, false)
+                    val newCount = array[0].toInt()
+                    val newPrice = array[1]
                     onDecrementPrice(position, newPrice, newCount, product.id.toString() )
                     Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
                     tvAmount.text = array[0].toString()
@@ -87,10 +86,10 @@ class PokeCartAdapter(
             // add
             tvAdd.setOnClickListener {
                 Log.e(TAG, "added")
-                var array = updateItemCount(product.price, product.count, true,)
-                var newCount = array[0].toInt()
+                val array = updateItemCount(product.price, product.count, true,)
+                val newCount = array[0].toInt()
 
-                var newPrice = array[1]
+                val newPrice = array[1]
                 onIncrementPrice(position, newPrice, newCount, product.id.toString() )
                 Log.e(TAG, "added amount ${array[0]}  +  price${array[1]} ")
                 tvAmount.text = newCount.toString()
@@ -107,8 +106,8 @@ class PokeCartAdapter(
             price: Double,
             count: Int,
             isIncreased: Boolean, ): DoubleArray {
-            var itemValue = doubleArrayOf(0.0, 0.0)
-            var amount: Int = if(isIncreased){
+            val itemValue = doubleArrayOf(0.0, 0.0)
+            val amount: Int = if(isIncreased){
                 count+1
             }else{
                 count -1
@@ -117,7 +116,7 @@ class PokeCartAdapter(
             Log.e(TAG, "updateItemCount function ")
 
             // price
-            var price = price.times(amount)
+            val price = price.times(amount)
 
             itemValue[0] = amount.toDouble()
             val finalcount = BigDecimal(price).setScale(2, RoundingMode.HALF_EVEN)
@@ -147,7 +146,7 @@ class PokeCartAdapter(
         holder.bind(position, poke, onIncrementPrice, onDecrementPrice, binding)
 
 
-        var btnRemove:ImageView = holder.itemView.findViewById(R.id.ivCtDelete)
+        val btnRemove:ImageView = holder.itemView.findViewById(R.id.ivCtDelete)
         btnRemove.setOnClickListener {
            onItemClicked(poke)
             notifyItemRemoved(position)

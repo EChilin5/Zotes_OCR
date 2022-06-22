@@ -47,7 +47,7 @@ class ShoppingDetails(var id: String) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentShoppingDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,7 +65,7 @@ class ShoppingDetails(var id: String) : Fragment() {
     }
 
     private fun openAddNewItem() {
-        var args = Bundle()
+        val args = Bundle()
         args.putString("id", this.id)
        val dialog = ReviewItemOverlay()
         dialog.arguments = args
@@ -100,7 +100,7 @@ class ShoppingDetails(var id: String) : Fragment() {
                 return@addSnapshotListener
             }
 
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val reviewItem: ReviewModal = dc.document.toObject(ReviewModal::class.java)

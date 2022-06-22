@@ -29,20 +29,17 @@ class ReviewItemOverlay : DialogFragment() {
     private lateinit var etRating : EditText
     private lateinit var etDescription: EditText
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onStart() {
         super.onStart()
-        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentReviewItemOverlayBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,7 +49,7 @@ class ReviewItemOverlay : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
-        var id : String = arguments?.get("id") as String
+        val id : String = arguments?.get("id") as String
 
         btnAddItem.setOnClickListener {
             addItemReview(id)
@@ -63,7 +60,7 @@ class ReviewItemOverlay : DialogFragment() {
 
     private fun addItemReview(id: String) {
         val userName = Firebase.auth.currentUser
-        var currentUserName = userName?.email.toString()
+        val currentUserName = userName?.email.toString()
 
 
         val user = UserModal("", currentUserName)
@@ -74,7 +71,7 @@ class ReviewItemOverlay : DialogFragment() {
                 if(reviewCreation.isSuccessful){
                    // Toast.makeText(activity?.applicationContext, "sucess", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(context, "sucess", Toast.LENGTH_SHORT).show()
+                 //   Toast.makeText(context, "sucess", Toast.LENGTH_SHORT).show()
                 }
 
         }

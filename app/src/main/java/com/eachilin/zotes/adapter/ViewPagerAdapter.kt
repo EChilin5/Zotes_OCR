@@ -10,9 +10,9 @@ import com.eachilin.zotes.pokemondetailfragments.PokemonAdditionalDetails
 import com.eachilin.zotes.pokemondetailfragments.ShoppingDetails
 
 class ViewPagerAdapter(
-    var fragmnetManager: FragmentManager,
+    fragmnetManager: FragmentManager,
     lifecycle: Lifecycle,
-    var product: BusinessSearchResultItem,
+    private var product: BusinessSearchResultItem,
 
     ): FragmentStateAdapter(fragmnetManager, lifecycle) {
     override fun getItemCount(): Int {
@@ -20,8 +20,8 @@ class ViewPagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        var businessSearchResultItem = this.product
-        var id = this.product.id.toString()
+        val businessSearchResultItem = this.product
+        val id = this.product.id.toString()
 
 
       return when(position){

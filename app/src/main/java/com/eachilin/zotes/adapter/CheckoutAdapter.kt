@@ -53,17 +53,17 @@ class CheckoutAdapter(private val productInfo:MutableList<CartItemModal>): Recyc
     class CartViewHolder(itemView: ItemCheckoutBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: CartItemModal) {
-            var pokeImg :ImageView = itemView.findViewById(R.id.ivCheckPokemon)
-            var name:TextView = itemView.findViewById(R.id.tvCheckPokeNameCart)
-            var cost:TextView = itemView.findViewById(R.id.tvCheckCost)
+            val pokeImg :ImageView = itemView.findViewById(R.id.ivCheckPokemon)
+            val name:TextView = itemView.findViewById(R.id.tvCheckPokeNameCart)
+            val cost:TextView = itemView.findViewById(R.id.tvCheckCost)
 
             name.text = item.name
-            var pokeCost  = item.count.times(item.price)
+            val pokeCost  = item.count.times(item.price)
 
 
             cost.text = "$ $pokeCost"
 
-            var imageLink = item.image
+            val imageLink = item.image
 
             Glide.with(itemView.context)
                 .load(imageLink)

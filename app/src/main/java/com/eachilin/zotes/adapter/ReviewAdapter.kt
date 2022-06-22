@@ -40,9 +40,9 @@ class ReviewAdapter (private val reviewPost: MutableList<ReviewModal>) : Recycle
 
     inner class ReviewPostViewHolder(itemView: ItemReviewsBinding) : RecyclerView.ViewHolder(itemView.root) {
         fun bind(post: ReviewModal, binding: ItemReviewsBinding?, position: Int, ListLength: Int) {
-            var tvName = binding?.tvReviewName
-            var rbRating = binding?.rbReviewRating
-            var tvDescription = binding?.tvReviewDescription
+            val tvName = binding?.tvReviewName
+            val rbRating = binding?.rbReviewRating
+            val tvDescription = binding?.tvReviewDescription
 
             if(position ==ListLength){
                 binding?.vLine?.isVisible = false

@@ -40,7 +40,7 @@ class OrderAdapter(private var orderInfo: MutableList<OrderModal>) : RecyclerVie
     class OrderViewHolder(itemView : ItemOrderBinding): RecyclerView.ViewHolder(itemView.root) {
 
         fun bind(order: OrderModal, binding: ItemOrderBinding) {
-            var adapter = OrderItemDetailAdapter(order.Item, order.Item.size-1)
+            val adapter = OrderItemDetailAdapter(order.Item, order.Item.size-1)
             binding.tvOrderNumber.text = "Order #: ${order.id}"
             binding.tvItemOrderDate.text = order.date
             binding.tvOrderItemPrice.text = "Total Price: $${order.TotalPrice}"

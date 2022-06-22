@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface BusinessService {
     // set default to 20
     @GET("products?")
-    fun BusinessInfo(
+    fun businessInfo(
         @Query("limit") limit:String
     ) : Call<List<BusinessSearchResultItem>>
 }

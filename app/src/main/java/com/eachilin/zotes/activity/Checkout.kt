@@ -1,14 +1,11 @@
 package com.eachilin.zotes.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -19,7 +16,6 @@ import com.eachilin.zotes.adapter.CheckoutAdapter
 import com.eachilin.zotes.databinding.ActivityCheckoutBinding
 import com.eachilin.zotes.googlepay.PaymentsUtil
 import com.eachilin.zotes.modal.CartItemModal
-import com.eachilin.zotes.modal.CartModal
 import com.eachilin.zotes.modal.OrderItemsModal
 import com.eachilin.zotes.modal.OrderModal
 import com.google.android.gms.common.api.ApiException
@@ -29,7 +25,6 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.ktx.Firebase
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.BigDecimal
@@ -100,7 +95,7 @@ class Checkout : AppCompatActivity() {
     }
 
     private fun goToMain() {
-        var intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -109,7 +104,7 @@ class Checkout : AppCompatActivity() {
     private fun possiblyShowGooglePayButton() {
 
         val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
-        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
+        val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString())
 
         // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
         // OnCompleteListener to be triggered when the result of the call is known.
@@ -131,7 +126,7 @@ class Checkout : AppCompatActivity() {
             Toast.makeText(
                 this,
                 "Unfortunately, Google Pay is not available on this device",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show()
         }
     }
 
@@ -142,7 +137,7 @@ class Checkout : AppCompatActivity() {
 
         // The price provided to the API should include taxes and shipping.
         // This price is not displayed to the user.
-        val garmentPrice = count.toDouble()
+        val garmentPrice = count
         val priceCents = Math.round(garmentPrice * PaymentsUtil.CENTS.toLong()) + SHIPPING_COST_CENTS
 
         val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(priceCents)
@@ -191,7 +186,7 @@ class Checkout : AppCompatActivity() {
     }
 
     private fun handlePaymentSuccess(paymentData: PaymentData) {
-        val paymentInformation = paymentData.toJson() ?: return
+        val paymentInformation = paymentData.toJson()
 
         try {
             // Token will be null if PaymentDataRequest was not constructed using fromJson(String).
@@ -217,7 +212,7 @@ class Checkout : AppCompatActivity() {
 
     private fun deleteCollection() {
         for(item in productOrder){
-            var items = firestoreDB.collection("zotesOrderCart").document(item.id.toString()).delete()
+            val items = firestoreDB.collection("zotesOrderCart").document(item.id.toString()).delete()
             items.addOnCompleteListener {
                 Log.e(TAG, "deleted document ${item.id}")
             }
@@ -242,7 +237,7 @@ class Checkout : AppCompatActivity() {
                 return@addSnapshotListener
             }
             productOrder.clear()
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val orderItem: CartItemModal = dc.document.toObject(CartItemModal::class.java)
@@ -277,20 +272,19 @@ class Checkout : AppCompatActivity() {
     private fun completeOrder(){
         val email =getEmail()
         for(orderInformation in productOrder){
-            var itemID = orderInformation.itemId
-            var count = orderInformation.count
-            var imageLink = orderInformation.image
+            val count = orderInformation.count
+            val imageLink = orderInformation.image
 
-            var cost = orderInformation.count.times(orderInformation.price)
+            val cost = orderInformation.count.times(orderInformation.price)
 
-            var newOrderItem = OrderItemsModal(orderInformation.name.toString(), imageLink,
-                cost?.toLong(), count)
+            val newOrderItem = OrderItemsModal(orderInformation.name.toString(), imageLink,
+                cost.toLong(), count)
             orderItems.add(newOrderItem)
         }
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = sdf.format(Date())
-        var newOrder = OrderModal("", currentDate,  count, email, orderItems  )
+        val newOrder = OrderModal("", currentDate,  count, email, orderItems  )
         firestoreDB.collection("zotesCompletedOrder").add(newOrder)
             .addOnCompleteListener { newZotesOrder->
                 if(newZotesOrder.isSuccessful){
