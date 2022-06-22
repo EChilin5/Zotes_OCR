@@ -12,7 +12,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="sample user profile"
+        android:contentDescription="@string/sample_user_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:mipmap/sym_def_app_icon" />
@@ -23,7 +23,7 @@
         android:layout_height="36dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="Edgar Chilin"
+        android:text="@string/edgar_chilin"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"
@@ -37,7 +37,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:text="This is a very good pokemon. Expected nothing more from this pokemon. "
+        android:text="@string/this_is_a_very_good_pokemon_expected_nothing_more_from_this_pokemon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvReviewName" />

@@ -183,6 +183,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:background="@null"
+        android:contentDescription="@string/sample_product_image"
         app:layout_constraintStart_toStartOf="@id/DecriptionGuideLineV1"
         app:layout_constraintTop_toTopOf="@id/DescriptionGuideLine1"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"

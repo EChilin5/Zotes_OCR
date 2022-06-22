@@ -13,7 +13,7 @@
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price"
+        android:text="@string/price"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="20sp" />
 
@@ -21,7 +21,7 @@
         android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
+        android:text="@string/category"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="20sp" />
 
@@ -29,7 +29,7 @@
         android:id="@+id/tvRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating"
+        android:text="@string/rating"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="20sp" />
 
@@ -37,7 +37,7 @@
         android:id="@+id/tvStock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stock"
+        android:text="@string/stock"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="20sp" />
 
