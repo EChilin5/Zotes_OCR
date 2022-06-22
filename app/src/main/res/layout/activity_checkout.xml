@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextTextPersonNameLayout"
+        android:id="@+id/etCNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@id/ChekoutGuideLine2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etdfCName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

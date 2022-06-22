@@ -82,12 +82,13 @@ class overlay_buy_now : DialogFragment() {
         tvCost.text = cost
         paymentsClient = PaymentsUtil.createPaymentsClient(context as Activity)
         btnBuy.setOnClickListener {
-            if(tvName.text.isNotEmpty() && tvCost.text.isNotEmpty()){
+            if(binding.etdfEmail.text!!.isNotEmpty() && binding.etdfAddress.text!!.isNotEmpty() && binding.etdfName.text!!.isNotEmpty()){
                 completeOrder(tvName.text.toString(), 1, imageLink!!, cost.toDouble() )
                 dismiss()
                 requestPayment()
             }
             else{
+                Toast.makeText(context, "Missing Information, unable to make Purchase", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
         }
@@ -250,7 +251,6 @@ class overlay_buy_now : DialogFragment() {
                 .getJSONObject("billingAddress").getString("name")
             Log.d("BillingName", billingName)
 
-            Toast.makeText(context, "test", Toast.LENGTH_LONG).show()
 
             // Logging token string.
             Log.d("GooglePaymentToken", paymentMethodData

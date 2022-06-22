@@ -67,9 +67,12 @@ class HomeFragment : Fragment() {
         binding.etSearchDetails.doAfterTextChanged { task ->
 
             val temp = mutableListOf<BusinessSearchResultItem>()
+
             if(task?.isNotEmpty() == true){
+                var text = task.toString().lowercase()
                 for (item in businessInfo){
-                    if(item.title.contains(task)){
+                    val title = item.title.lowercase()
+                    if(title.contains(text)){
                         temp.add(item)
                     }
                 }

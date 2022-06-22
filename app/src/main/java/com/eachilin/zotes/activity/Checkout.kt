@@ -78,7 +78,7 @@ class Checkout : AppCompatActivity() {
         rvCheckout.layoutManager = LinearLayoutManager(this)
         fetchData()
 
-        etName = binding.editTextTextPersonName
+        etName = binding.etdfCName
         etAddress = binding.etAddress
         etEmail = binding.etEmail
 //        btnBuy = binding.btncBuyNow
@@ -87,8 +87,18 @@ class Checkout : AppCompatActivity() {
         possiblyShowGooglePayButton()
 
         btnBuy.setOnClickListener {
-            completeOrder()
-            requestPayment()
+
+            if(binding.etAddress.text!!.isNotEmpty() &&
+                    binding.etEmail.text!!.isNotEmpty() &&
+                    binding.etdfCName.text!!.isNotEmpty()){
+                completeOrder()
+                requestPayment()
+            }else{
+                Toast.makeText(this, "Missing Information, unable to make Purchase", Toast.LENGTH_SHORT).show()
+
+                return@setOnClickListener
+            }
+
         }
 
 
@@ -195,7 +205,6 @@ class Checkout : AppCompatActivity() {
                 .getJSONObject("billingAddress").getString("name")
             Log.d("BillingName", billingName)
 
-            Toast.makeText(this, "test", Toast.LENGTH_LONG).show()
 
             // Logging token string.
             Log.d("GooglePaymentToken", paymentMethodData
@@ -289,12 +298,7 @@ class Checkout : AppCompatActivity() {
             .addOnCompleteListener { newZotesOrder->
                 if(newZotesOrder.isSuccessful){
                     Log.e(TAG,"uploaded successfully")
-                    Toast.makeText(this, "uploadeded", Toast.LENGTH_SHORT).show()
                     checkout()
-
-                }else{
-                    Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
-
                 }
             }
 
@@ -307,7 +311,6 @@ class Checkout : AppCompatActivity() {
         val email = etEmail.text.trim().toString()
 
         if(name.isNotEmpty() && address.isNotEmpty() && email.isNotEmpty()){
-            Toast.makeText(this, "t", Toast.LENGTH_SHORT).show()
 //            val intent = Intent(Intent.ACTION_SENDTO)
 //            intent.data = Uri.parse("mailto:") // only email apps should handle this
 //
